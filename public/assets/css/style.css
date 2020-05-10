@@ -396,7 +396,7 @@ input:-webkit-autofill {
   font-size: 0.875em;
   border-radius: 4px;
   display: block;
-  width: 100% !important;
+  width: 100%;
   color: #000000;
   padding: 10px;
   background: #ffffff;

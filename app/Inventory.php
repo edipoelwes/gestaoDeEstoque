@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Inventory extends Model
 {
@@ -17,8 +18,20 @@ class Inventory extends Model
       'min_amount',
    ];
 
-   public function add()
+
+   public function searchProductByName($id, $company_id)
    {
+
+      // $product = DB::table('inventories')
+      //    ->select('id', 'name')
+      //    ->where('name', 'like', '%'. $name . '%')
+      //    ->get();
+
+      $product = Inventory::where([['id', $id], ['company_id', $company_id] ])->first();
+
+      $product['link'] = url('https://localhost/projects/b7web/sonhosDeNinar/public/inventories/'.$product->id.'/edit');
+
+      return $product;
    }
 
    public function setPriceAttribute($value)
@@ -32,7 +45,7 @@ class Inventory extends Model
 
    public function getPriceAttribute($value)
    {
-      return number_format($value, 2, ',', '.');
+      return $value;
    }
 
    private function convertStringToDouble(?string $param)

@@ -14,7 +14,8 @@ class Sale extends Model
     'user_id',
     'client_id',
     'total_price',
-    'status'
+    'status',
+    'description',
   ];
 
 
