@@ -73,6 +73,7 @@ $(function () {
 
 
    $('#add_prod').on('keyup', function () {
+
       var datatype = $(this).attr('data-type');
       var input = $(this).val();
 

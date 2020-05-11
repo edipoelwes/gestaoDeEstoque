@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\{Client, Inventory, Sale, SaleProduct, User};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\{Auth, DB};
 
 class SaleController extends Controller
 {
@@ -16,12 +15,10 @@ class SaleController extends Controller
     */
    public function index()
    {
-
-      // dd(Inventory::all(['id', 'name']));
-
+      $user = Auth::user();
 
       return view('admin.sales.index', [
-         'sales' => Sale::all(),
+         'sales' => Sale::where('company_id', $user->company_id)->get(),
       ]);
    }
 
@@ -53,44 +50,35 @@ class SaleController extends Controller
 
       $itens = $sales['amount'];
 
+      if ($salesCreate = Sale::create($sales)) {
 
-
-      if($salesCreate = Sale::create($sales)){
-         $array = array();
-         $total = 0;
-         foreach($itens as $id => $item){
-            $product_iten = array();
-            $amount = $item;
+         foreach ($itens as $id => $item) {
+            $product_item = array();
+            $amount = intval($item);
             $product = DB::table('inventories')
-            ->select('price')
-            ->where('id', $id)
-            ->first();
+               ->select('price')
+               ->where('id', $id)
+               ->first();
 
             $subTotal = $amount * $product->price;
 
-            $product_iten['sale_id'] = $salesCreate->id;
-            $product_iten['company_id'] = $user->company_id;
-            $product_iten['inventory_id'] = $amount;
-            $product_iten['sale_price'] = $subTotal;
+            $product_item['sale_id'] = $salesCreate->id;
+            $product_item['company_id'] = $user->company_id;
+            $product_item['inventory_id'] = $id;
+            $product_item['amount'] = $amount;
+            $product_item['price'] = $product->price;
+            $product_item['sub_total'] = $subTotal;
 
-            array_push($array, $product_iten);
+            SaleProduct::create($product_item);
 
-            $total += $subTotal;
+            $this->downInventory($id, $user->company_id, $amount);
 
-            // $saleTotal = Sale::find($salesCreate->id);
-            // $saleTotal['total_price'] = $total;
-            // $saleTotal->update();
          }
+      }
 
-         $save = new SaleProduct;
-         $save->attach($array);
+      $this->updateTotalPrice($salesCreate->id);
 
-
-         // dd($array);
-      };
-
-
-      return redirect()->route('sales.edit', [
+      return redirect()->route('sales.index', [
          'sale' => $salesCreate->id,
       ])->with(['color' => 'green', 'message' => 'Pedido cadastrado com sucesso!']);
    }
@@ -103,7 +91,14 @@ class SaleController extends Controller
     */
    public function show($id)
    {
-      //
+      $user = Auth::user();
+      $details = Sale::where([['id', $id], ['company_id', $user->company_id]])->first();
+      $products = SaleProduct::where([['sale_id', $id], ['company_id', $user->company_id]])->get();
+
+      return view('admin.sales.details', [
+         'details' => $details,
+         'products' => $products,
+      ]);
    }
 
    /**
@@ -114,7 +109,12 @@ class SaleController extends Controller
     */
    public function edit($id)
    {
-      //
+      $sale = Sale::where('id', $id)->first();
+
+      return view('admin.sales.form', [
+         'sale' => $sale,
+         'clients' => Client::all('id', 'name'),
+      ]);
    }
 
    /**
@@ -152,5 +152,33 @@ class SaleController extends Controller
       $data = $product->searchProductByName($item, $user->company_id);
 
       echo json_encode($data);
+   }
+
+   private function updateTotalPrice($id)
+   {
+      $sale_price = SaleProduct::where('sale_id', $id)->sum('sub_total');
+      $saleTotal = Sale::find($id);
+      $saleTotal->total_price = $sale_price;
+
+      $saleTotal->save();
+   }
+
+   private function downInventory($id, $company_id, $amount)
+   {
+      $product_inventory = DB::table('inventories')
+      ->select('amount')
+      ->where([['id', $id], ['company_id', $company_id]])
+      ->first();
+
+      if($product_inventory->amount > 0 && $product_inventory->amount >= $amount) {
+         $total = $product_inventory->amount - $amount;
+
+         $inventory = Inventory::find($id);
+         $inventory->amount = $total;
+
+         $inventory->save();
+
+      }
+
    }
 }

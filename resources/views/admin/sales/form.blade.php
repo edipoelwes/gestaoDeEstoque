@@ -95,7 +95,6 @@
                               <option value="">Selecione o status da venda</option>
                               <option value="0">Pendente</option>
                               <option value="1">Confirmado</option>
-                              <option value="1">Cancelado</option>
                            </select>
                         </label>
                      </div>
@@ -158,6 +157,5 @@
 </script>
 
 <script src="{{ asset('assets/js/productsAjax.js') }}"></script>
-
 
 @endpush

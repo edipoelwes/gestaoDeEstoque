@@ -29,26 +29,26 @@ class Sale extends Model
     return $this->belongsTo(Client::class);
   }
 
-  public function setTotalPriceAttribute($value)
-  {
-    if (empty($value)) {
-      $this->attributes['total_price'] = null;
-    } else {
-      $this->attributes['total_price'] = floatval($this->convertStringToDouble($value));
-    }
-  }
+//   public function setTotalPriceAttribute($value)
+//   {
+//     if (empty($value)) {
+//       $this->attributes['total_price'] = null;
+//     } else {
+//       $this->attributes['total_price'] = floatval($this->convertStringToDouble($value));
+//     }
+//   }
 
-  public function getTotalPriceAttribute($value)
-  {
-    return number_format($value, 2, ',', '.');
-  }
+//   public function getTotalPriceAttribute($value)
+//   {
+//     return number_format($value, 2, ',', '.');
+//   }
 
-  private function convertStringToDouble(?string $param)
-  {
-    if (empty($param)) {
-      return null;
-    }
+//   private function convertStringToDouble(?string $param)
+//   {
+//     if (empty($param)) {
+//       return null;
+//     }
 
-    return str_replace(',', '.', str_replace('.', '', $param));
-  }
+//     return str_replace(',', '.', str_replace('.', '', $param));
+//   }
 }

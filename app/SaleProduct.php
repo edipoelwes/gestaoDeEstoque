@@ -14,6 +14,12 @@ class SaleProduct extends Model
       'sale_id',
       'inventory_id',
       'amount',
-      'sale_price',
+      'price',
+      'sub_total',
    ];
+
+   public function inventory ()
+   {
+      return $this->belongsTo(Inventory::class);
+   }
 }

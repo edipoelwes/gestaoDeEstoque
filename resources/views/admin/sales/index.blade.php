@@ -31,24 +31,27 @@
             <thead>
                <tr>
                   <th>#</th>
-                  <th>cliente</th>
-                  <th>valor total</th>
-                  <th>status</th>
-                  <th>responsável</th>
-                  <th>data</th>
+                  <th>Cliente</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Responsável</th>
+                  <th>Data</th>
+                  <th>Detalhes</th>
+
                </tr>
             </thead>
             <tbody>
                @foreach ($sales as $sale)
                <tr>
                   <td>{{ $sale->id }}</td>
-                  <td><a href="{{ route('sales.edit', ['sale' => $sale->id]) }}" class="text-orange">
-                        {{ $sale->client->name  }}</a></td>
-                  <td>{{ $sale->total_price }}</td>
-                  <td class="badge badge-pill {{ ($sale->status == 0 ? 'badge-warning' : ($sale->status == 1 ? 'badge-success' : 'badge-danger')) }}">
+                  <td class="text-orange"> {{ $sale->client->name  }}</td>
+                  <td>{{ money_br($sale->total_price) }}</td>
+                  <td
+                     class="badge badge-pill {{ ($sale->status == 0 ? 'badge-warning' : ($sale->status == 1 ? 'badge-success' : 'badge-danger')) }}">
                      {{ ($sale->status == 0 ? 'pendente' : ($sale->status == 1 ? 'confirmado' : 'cancelado')) }}</td>
                   <td>{{ $sale->user->name }}</td>
-                  <td>{{ $sale->created_at }}</td>
+                  <td>{{ date_br($sale->created_at) }}</td>
+                  <td><a href="{{ route('sales.show', ['sale' => $sale->id]) }}" class="icon-file-text text-orange"></a></td>
                </tr>
                @endforeach
             </tbody>

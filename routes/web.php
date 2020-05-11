@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
 
    Route::get('users/team', 'UserController@team')->name('users.team');
    Route::get('search-products', 'SaleController@search_products')->name('sales.search-products');
+   //Route::get('details/{sale}', 'SaleController@details')->name('sales.details');
    Route::resources([
       'sales' => 'SaleController',
       'users' => 'UserController',
