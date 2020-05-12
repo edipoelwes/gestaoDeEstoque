@@ -51,7 +51,7 @@
                @csrf
                <div class="nav_tabs_content">
                   <div id="data">
-                     <div class="label_g2">
+                     <div class="label_g4">
                         <label class="label">
                            <span class="legend">Cliente:</span>
                            <select name="client_id" class="select2">
@@ -61,6 +61,39 @@
                                  {{ $client->name }} ({{ $client->document }})</option>
                               @endforeach
                            </select>
+                        </label>
+
+                        <label class="label">
+                           <span class="legend">Status:</span>
+                           <select name="status" class="select2">
+                              <option value="">Selecione o status da venda</option>
+                              <option value="0">Pendente</option>
+                              <option value="1">Confirmado</option>
+                           </select>
+                        </label>
+
+                        <label class="label">
+                           <span class="legend">Desconto:</span>
+                           <input type="text" id="discount" name="discount" class="mask-money" onblur="updateDiscount(this)" autocomplete="off"
+                              value="{{ old('discount', $product->discount ?? null) }}" />
+
+                           @error('discount')
+                           <span class="message-color" role="alert">
+                              <p class="icon-asterisk">{{ $message }}</p>
+                           </span>
+                           @enderror
+                        </label>
+
+                        <label class="label">
+                           <span class="legend">Total:</span>
+                           <input type="text" name="total_price" class="mask-money" disabled
+                              value="{{ old('total_price', $product->total_price ?? null) }}" />
+
+                           @error('total_price')
+                           <span class="message-color" role="alert">
+                              <p class="icon-asterisk">{{ $message }}</p>
+                           </span>
+                           @enderror
                         </label>
                      </div>
 
@@ -75,29 +108,6 @@
                         </span>
                         @enderror
                      </label>
-
-                     <div class="label_g2">
-                        <label class="label">
-                           <span class="legend">Total:</span>
-                           <input type="text" name="total_price" class="mask-money" disabled
-                              value="{{ old('total_price', $product->total_price ?? null) }}" />
-
-                           @error('total_price')
-                           <span class="message-color" role="alert">
-                              <p class="icon-asterisk">{{ $message }}</p>
-                           </span>
-                           @enderror
-                        </label>
-
-                        <label class="label">
-                           <span class="legend">Status:</span>
-                           <select name="status" class="select2">
-                              <option value="">Selecione o status da venda</option>
-                              <option value="0">Pendente</option>
-                              <option value="1">Confirmado</option>
-                           </select>
-                        </label>
-                     </div>
                   </div>
                   <br><br>
 

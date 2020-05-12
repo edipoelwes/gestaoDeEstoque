@@ -45,7 +45,7 @@
 
 
 .searchresults {
-   width: 472px;
+   width: 729px !important;
    min-height: 45px;
    background-color: #eee;
    position: absolute;

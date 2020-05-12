@@ -14,8 +14,9 @@ function updateSubTotal(obj) {
    updateTotal();
 }
 
-function updateTotal() {
+function updateTotal(disc = 0 ) {
    var total = 0;
+   var discount = parseFloat(disc);
 
    for(var q=0; q<$('.amount').length; q++) {
 
@@ -27,8 +28,16 @@ function updateTotal() {
       total += subtotal;
    }
 
+   total -= discount;
 
    $('input[name=total_price]').val(total);
+
+}
+
+function updateDiscount() {
+   var discount = $('#discount').val();
+
+   updateTotal(discount);
 
 }
 

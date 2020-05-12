@@ -18,6 +18,7 @@ class CreateSalesTable extends Migration
          $table->unsignedBigInteger('company_id');
          $table->unsignedBigInteger('user_id');
          $table->unsignedBigInteger('client_id');
+         $table->decimal('discount', 10, 2)->default(0);
          $table->decimal('total_price', 10, 2)->default(0);
          $table->integer('status')->nullable();
          $table->text('description')->nullable();

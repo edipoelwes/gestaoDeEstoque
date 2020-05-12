@@ -28,10 +28,13 @@
             <p>Vendedor: {{ $details->user->name }}</p>
             <p>Cliente: {{ $details->client->name }}</p>
             <p>Status: {{ $details->status }}</p>
-            <p>Data: {{ date_br($details->created_at) }}</p>
+            @if ($details->discount != 0)
+            <p>Desconto: {{ money_br($details->discount) }}</p>
+            @endif
             <p>Total: {{ money_br($details->total_price) }}</p>
+            <p>Data: {{ date_br($details->created_at) }}</p>
             @if ($details->description)
-               <p>Descrição: {{ $details->description }}</p>
+            <p>Descrição: {{ $details->description }}</p>
             @endif
          </div>
       </div>
