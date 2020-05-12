@@ -145,6 +145,22 @@ class SaleController extends Controller
       $status->status = $st['status'];
       $status->save();
 
+      if ($status->status == 2) {
+
+         $products = DB::table('sale_products')
+            ->select('amount', 'inventory_id', 'company_id')
+            ->where([['sale_id', $id], ['company_id', $status->company_id]])
+            ->get();
+
+         foreach ($products as $product) {
+
+            $inventory = Inventory::find($product->inventory_id);
+
+            $inventory->amount += $product->amount;
+            $inventory->save();
+         }
+      }
+
       return redirect()->route('sales.show', [
          'sale' => $id,
       ])->with(['color' => 'green', 'message' => 'status atualizado com sucesso!']);
