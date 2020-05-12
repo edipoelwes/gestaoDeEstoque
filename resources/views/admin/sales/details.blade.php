@@ -25,16 +25,30 @@
    <div class="dash_content_app_box">
       <div class="dash_content_app_box_stage">
          <div>
-            <p>Vendedor: {{ $details->user->name }}</p>
-            <p>Cliente: {{ $details->client->name }}</p>
-            <p>Status: {{ $details->status }}</p>
-            @if ($details->discount != 0)
-            <p>Desconto: {{ money_br($details->discount) }}</p>
-            @endif
-            <p>Total: {{ money_br($details->total_price) }}</p>
-            <p>Data: {{ date_br($details->created_at) }}</p>
-            @if ($details->description)
-            <p>Descrição: {{ $details->description }}</p>
+            <p><b>Vendedor:</b> {{ $detail->user->name }}</p>
+            <p><b>Cliente:</b> {{ $detail->client->name }}</p>
+
+            <form action="{{ route('sales.details-status', ['sale' => $detail->id]) }}" method="post"
+               enctype="multipart/form-data">
+               @method('PUT')
+               @csrf
+               <label class="label">
+                  <span class="legend"><b>Status:</b></span>
+                  <select name="status" class="btn btn-large">
+                     <option value="0" {{ ($detail->status == 0 ? 'selected' : '') }}>Pendente</option>
+                     <option value="1" {{ ($detail->status == 1 ? 'selected' : '') }}>Confirmado</option>
+                     <option value="2" {{ ($detail->status == 2 ? 'selected' : '') }}>Cancelado</option>
+                  </select>
+               </label>
+               <button class="btn btn-large btn-blue" type="submit">Atualizar Status</button>
+            </form>
+
+            <br>
+            <p><b>Desconto:</b> {{ money_br($detail->discount) }}</p>
+            <p><b>Total:</b> {{ money_br($detail->total_price) }}</p>
+            <p><b>Data:</b> {{ date_br($detail->created_at) }}</p>
+            @if ($detail->description)
+            <p><b>Descrição:</b> {{ $detail->description }}</p>
             @endif
          </div>
       </div>
@@ -66,9 +80,17 @@
                   <td>R$ {{ money_br($product->sub_total) }}</td>
                </tr>
                @endforeach
-               <td colspan="3"></td>
-               <td><b>Total</b></td>
-               <td>R$ {{ $details->total_price }}</td>
+               <tr>
+                  <td colspan="3"></td>
+                  <td><b>Desconto</b></td>
+                  <td>R$ {{ money_br($detail->discount) }}</td>
+               </tr>
+
+               <tr>
+                  <td colspan="3"></td>
+                  <td><b>Total</b></td>
+                  <td>R$ {{ money_br($detail->total_price) }}</td>
+               </tr>
             </tbody>
          </table>
       </div>

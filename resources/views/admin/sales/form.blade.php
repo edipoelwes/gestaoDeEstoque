@@ -73,18 +73,6 @@
                         </label>
 
                         <label class="label">
-                           <span class="legend">Desconto:</span>
-                           <input type="text" id="discount" name="discount" class="mask-money" onblur="updateDiscount(this)" autocomplete="off"
-                              value="{{ old('discount', $product->discount ?? null) }}" />
-
-                           @error('discount')
-                           <span class="message-color" role="alert">
-                              <p class="icon-asterisk">{{ $message }}</p>
-                           </span>
-                           @enderror
-                        </label>
-
-                        <label class="label">
                            <span class="legend">Total:</span>
                            <input type="text" name="total_price" class="mask-money" disabled
                               value="{{ old('total_price', $product->total_price ?? null) }}" />
@@ -119,6 +107,18 @@
                         <label class="label">
                            <span class="legend">Id produto:</span>
                            <input type="text" id="add_prod" data-type="search-products" autocomplete="off" />
+                        </label>
+
+                        <label class="label">
+                           <span class="legend">Desconto:</span>
+                           <input type="text" id="discount" name="discount" class="mask-money" onblur="updateDiscount(this)" autocomplete="off"
+                              value="{{ old('discount', $product->discount ?? null) }}" />
+
+                           @error('discount')
+                           <span class="message-color" role="alert">
+                              <p class="icon-asterisk">{{ $message }}</p>
+                           </span>
+                           @enderror
                         </label>
                      </div>
                      <br><br>
@@ -163,7 +163,6 @@
 <script type="text/javascript">
    var BASE_URL = {!! json_encode(url('/')) !!};
 
-   console.log(BASE_URL);
 </script>
 
 <script src="{{ asset('assets/js/productsAjax.js') }}"></script>

@@ -26,16 +26,22 @@ function updateTotal(disc = 0 ) {
       var subtotal = parseFloat(price) * parseInt(amount.val());
 
       total += subtotal;
+
    }
 
    total -= discount;
 
    $('input[name=total_price]').val(total);
-
 }
 
 function updateDiscount() {
-   var discount = $('#discount').val();
+   var disc = $('#discount').val();
+
+   if(disc === ''){
+      disc = '0,0';
+   }
+
+   var discount = disc.replace(',', '.');
 
    updateTotal(discount);
 
@@ -96,7 +102,7 @@ $(function () {
             },
             dataType: 'json',
             success: function (json) {
-               console.log(json);
+               //console.log(json);
                if ($(".searchresults").length == 0) {
                   $('#add_prod').after('<div class="searchresults"></div>');
                }

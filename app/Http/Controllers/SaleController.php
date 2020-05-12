@@ -45,8 +45,11 @@ class SaleController extends Controller
       $user = Auth::user();
       $sales = $request->all();
 
+      $discount = str_replace(',', '.', $sales['discount']);
+
       $sales['user_id'] = $user->id;
       $sales['company_id'] = $user->company_id;
+      $sales['discount'] = $discount;
 
       $itens = $sales['amount'];
 
@@ -72,11 +75,10 @@ class SaleController extends Controller
             SaleProduct::create($product_item);
 
             $this->downInventory($id, $user->company_id, $amount);
-
          }
       }
 
-      $this->updateTotalPrice($salesCreate->id);
+      $this->updateTotalPrice($salesCreate->id, $discount);
 
       return redirect()->route('sales.index', [
          'sale' => $salesCreate->id,
@@ -92,11 +94,11 @@ class SaleController extends Controller
    public function show($id)
    {
       $user = Auth::user();
-      $details = Sale::where([['id', $id], ['company_id', $user->company_id]])->first();
+      $detail = Sale::where([['id', $id], ['company_id', $user->company_id]])->first();
       $products = SaleProduct::where([['sale_id', $id], ['company_id', $user->company_id]])->get();
 
       return view('admin.sales.details', [
-         'details' => $details,
+         'detail' => $detail,
          'products' => $products,
       ]);
    }
@@ -135,6 +137,19 @@ class SaleController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
+
+   public function changeStatus(Request $request, $id)
+   {
+      $st = $request->only('status');
+      $status = Sale::find($id);
+      $status->status = $st['status'];
+      $status->save();
+
+      return redirect()->route('sales.show', [
+         'sale' => $id,
+      ])->with(['color' => 'green', 'message' => 'status atualizado com sucesso!']);
+   }
+
    public function destroy($id)
    {
       //
@@ -154,11 +169,11 @@ class SaleController extends Controller
       echo json_encode($data);
    }
 
-   private function updateTotalPrice($id)
+   private function updateTotalPrice($id, $discount)
    {
       $sale_price = SaleProduct::where('sale_id', $id)->sum('sub_total');
       $saleTotal = Sale::find($id);
-      $saleTotal->total_price = $sale_price;
+      $saleTotal->total_price = $sale_price - (floatval($discount));
 
       $saleTotal->save();
    }
@@ -166,19 +181,16 @@ class SaleController extends Controller
    private function downInventory($id, $company_id, $amount)
    {
       $product_inventory = DB::table('inventories')
-      ->select('amount')
-      ->where([['id', $id], ['company_id', $company_id]])
-      ->first();
+         ->select('amount')
+         ->where([['id', $id], ['company_id', $company_id]])
+         ->first();
 
-      if($product_inventory->amount > 0 && $product_inventory->amount >= $amount) {
-         $total = $product_inventory->amount - $amount;
 
-         $inventory = Inventory::find($id);
-         $inventory->amount = $total;
+      $total = $product_inventory->amount - $amount;
 
-         $inventory->save();
+      $inventory = Inventory::find($id);
+      $inventory->amount = $total;
 
-      }
-
+      $inventory->save();
    }
 }
