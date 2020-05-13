@@ -5,6 +5,7 @@
 @endpush
 
 @section('content')
+
 <section class="dash_content_app">
    <header class="dash_content_app_header">
       <h2 class="icon-search">Filtro</h2>
@@ -37,6 +38,7 @@
                   <th>Quant.</th>
                   <th>Preço</th>
                   <th>Quant. Min</th>
+                  <th class="text-center">Ações</th>
 
                </tr>
             </thead>
@@ -53,6 +55,23 @@
                   <td>R$ {{ $product->price }}</td>
                   <td class="badge badge-pill badge-primary">{{ $product->min_amount }}</td>
 
+                  <td class="text-center">
+                     {{-- <a href="{{ route('inventories.edit', ['inventory' => $product->id]) }}" class="btn btn-sm btn-blue"
+                        title="Editar Usuário">
+                        <i class="fa fa-edit"></i>editar
+                     </a> --}}
+
+                     <a href="javascript:;" class="icon-trash text-orange" onclick="confirmDelete({{ $product->id }})"
+                        title="Excluir Usuário">
+                     </a>
+
+                     <form id="btn-delete-{{ $product->id }}" action="{{ route('inventories.destroy', $product->id) }}"
+                        method="post" class="hidden">
+                        @method('DELETE')
+                        @csrf
+                     </form>
+                  </td>
+
                </tr>
                @endforeach
             </tbody>
@@ -61,3 +80,7 @@
    </div>
 </section>
 @endsection
+
+@push('js')
+<script src="{{ asset('assets/js/functions.js') }}" defer></script>
+@endpush

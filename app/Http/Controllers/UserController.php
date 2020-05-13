@@ -6,7 +6,7 @@ use App\{Company, User};
 use App\Http\Requests\User as UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\{Auth, Storage};
 
 class UserController extends Controller
 {
@@ -17,7 +17,7 @@ class UserController extends Controller
     */
    public function index()
    {
-      $users = User::all();
+      $users = User::where('company_id', Auth::User()->company_id)->get();
       return view('admin.users.index', [
          'users' => $users,
       ]);
@@ -25,7 +25,7 @@ class UserController extends Controller
 
    public function team()
    {
-      $users = User::where('admin', 1)->get();
+      $users = User::where([['company_id', Auth::User()->company_id], ['admin', 1]])->get();
       return view('admin.users.team', [
          'users' => $users,
       ]);
@@ -62,7 +62,7 @@ class UserController extends Controller
 
       return redirect()->route('users.edit', [
          'user' => $userCreate->id,
-      ])->with(['color' => 'green', 'message' => 'Usuario cadastrado com sucesso!']);
+      ])->withSuccess('Usuario cadastrado com sucesso!');
    }
 
    /**
@@ -120,7 +120,7 @@ class UserController extends Controller
 
       return redirect()->route('users.edit', [
          'user' => $user->id,
-      ])->with(['color' => 'green', 'message' => 'Cliente atualizado com sucesso!']);
+      ])->withSuccess('Usuario atualizado com sucesso!');
    }
 
    /**

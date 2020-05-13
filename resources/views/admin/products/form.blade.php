@@ -25,12 +25,6 @@
 
       <div class="nav">
 
-         @if(session()->exists('message'))
-         @message(['color' => session()->get('color')])
-         <p class="icon-asterisk">{{ session()->get('message') }}</p>
-         @endmessage
-         @endif
-
          <ul class="nav_tabs">
             <li class="nav_tabs_item">
                <a href="#data" class="nav_tabs_item_link active">Dados Cadastrais</a>
@@ -112,10 +106,6 @@
                   <button class="btn btn-large btn-green icon-check-square-o" type="submit">Salvar Produto</button>
                </div>
                @endif
-
-               {{-- <div class="text-right mt-2">
-            <button class="btn btn-large btn-green icon-check-square-o" type="submit">Salvar Produto</button>
-          </div> --}}
             </form>
       </div>
    </div>

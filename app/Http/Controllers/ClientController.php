@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\{Client, Company};
 use App\Http\Requests\Client as ClientRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -15,9 +16,8 @@ class ClientController extends Controller
     */
    public function index()
    {
-      $clients = Client::all();
       return view('admin.clients.index', [
-         'clients' => $clients,
+         'clients' => Client::where('company_id', Auth::user()->company_id)->get(),
       ]);
    }
 
@@ -46,7 +46,7 @@ class ClientController extends Controller
 
       return redirect()->route('clients.edit', [
          'client' => $clientCreate->id,
-      ])->with(['color' => 'green', 'message' => 'Cliente cadastrado com sucesso!']);
+      ])->withToastSuccess('Cliente cadastrado com sucesso!');
    }
 
    /**
@@ -89,7 +89,7 @@ class ClientController extends Controller
 
       return redirect()->route('clients.edit', [
          'client' => $client->id,
-      ])->with(['color' => 'green', 'message' => 'Cliente atualizado com sucesso!']);
+      ])->withSuccess('Cliente atualizado com sucesso!');
    }
 
    /**

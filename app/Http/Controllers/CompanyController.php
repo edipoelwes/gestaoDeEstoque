@@ -6,6 +6,7 @@ use App\{User, Company};
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Company as CompanyRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -17,7 +18,7 @@ class CompanyController extends Controller
    public function index()
    {
       return view('admin.companies.index', [
-         'companies' => Company::all(),
+         'companies' => Company::where('id', Auth::user()->company_id)->get(),
       ]);
    }
 
@@ -47,7 +48,7 @@ class CompanyController extends Controller
 
       return redirect()->route('companies.edit', [
          'company' => $companyCreate->id,
-      ])->with(['color' => 'green', 'message' => 'Empresa criada com sucesso!']);
+      ])->withSuccess('Cliente cadastrado com sucesso!');
    }
 
    /**
@@ -92,7 +93,7 @@ class CompanyController extends Controller
 
       return redirect()->route('companies.edit', [
          'company' => $company->id,
-      ])->with(['color' => 'green', 'message' => 'Empresa atualizada com sucesso!']);
+      ])->withSuccess('Empresa atualizado com sucesso!');
    }
 
    /**

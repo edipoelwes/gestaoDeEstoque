@@ -15,10 +15,8 @@ class SaleController extends Controller
     */
    public function index()
    {
-      $user = Auth::user();
-
       return view('admin.sales.index', [
-         'sales' => Sale::where('company_id', $user->company_id)->get(),
+         'sales' => Sale::where('company_id', Auth::user()->company_id)->get(),
       ]);
    }
 
@@ -82,7 +80,7 @@ class SaleController extends Controller
 
       return redirect()->route('sales.index', [
          'sale' => $salesCreate->id,
-      ])->with(['color' => 'green', 'message' => 'Pedido cadastrado com sucesso!']);
+      ])->withSuccess('Peido cadastrado com sucesso!');
    }
 
    /**
@@ -163,7 +161,7 @@ class SaleController extends Controller
 
       return redirect()->route('sales.show', [
          'sale' => $id,
-      ])->with(['color' => 'green', 'message' => 'status atualizado com sucesso!']);
+      ])->withSuccess('Status atualizado com sucesso!');
    }
 
    public function destroy($id)

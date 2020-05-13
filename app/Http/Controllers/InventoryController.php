@@ -16,8 +16,9 @@ class InventoryController extends Controller
     */
    public function index()
    {
+
       return view('admin.products.index', [
-         'products' => Inventory::all(),
+         'products' => Inventory::where('company_id', Auth::user()->company_id)->get(),
       ]);
    }
 
@@ -54,7 +55,7 @@ class InventoryController extends Controller
 
       return redirect()->route('inventories.edit', [
          'inventory' => $createProduct->id,
-      ])->with(['color' => 'green', 'message' => 'Produto cadastrado com sucesso!']);
+      ])->withSuccess('Producto Cadastro com Sucesso!');
    }
 
    /**
@@ -103,7 +104,7 @@ class InventoryController extends Controller
 
       return redirect()->route('inventories.edit', [
          'inventory' => $productUpdate->id,
-      ])->with(['color' => 'green', 'message' => 'Produto atualizado com sucesso!']);
+      ])->withSuccess('Producto Atualizado com Sucesso!');
    }
 
    /**
@@ -114,7 +115,11 @@ class InventoryController extends Controller
     */
    public function destroy($id)
    {
-      //
+      $product = Inventory::find($id);
+
+      $product->delete();
+
+      return back()->withToastSuccess('Produto excluído com sucesso!');
    }
 
 
