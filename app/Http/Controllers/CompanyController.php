@@ -48,7 +48,7 @@ class CompanyController extends Controller
 
       return redirect()->route('companies.edit', [
          'company' => $companyCreate->id,
-      ])->withSuccess('Cliente cadastrado com sucesso!');
+      ])->withToastSuccess('Cliente cadastrado com sucesso!');
    }
 
    /**
@@ -93,7 +93,7 @@ class CompanyController extends Controller
 
       return redirect()->route('companies.edit', [
          'company' => $company->id,
-      ])->withSuccess('Empresa atualizado com sucesso!');
+      ])->withToastSuccess('Empresa atualizado com sucesso!');
    }
 
    /**

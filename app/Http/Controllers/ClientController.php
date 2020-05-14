@@ -89,7 +89,7 @@ class ClientController extends Controller
 
       return redirect()->route('clients.edit', [
          'client' => $client->id,
-      ])->withSuccess('Cliente atualizado com sucesso!');
+      ])->withToastSuccess('Cliente atualizado com sucesso!');
    }
 
    /**
@@ -100,6 +100,10 @@ class ClientController extends Controller
     */
    public function destroy($id)
    {
-      //
+      $product = Client::find($id);
+
+      $product->delete();
+
+      return back()->withToastSuccess('Cliente excluído com sucesso!');
    }
 }

@@ -54,7 +54,7 @@ class SaleController extends Controller
       if ($salesCreate = Sale::create($sales)) {
 
          foreach ($itens as $id => $item) {
-            $product_item = array();
+            $product_item = [];
             $amount = intval($item);
             $product = DB::table('inventories')
                ->select('price')
@@ -80,7 +80,7 @@ class SaleController extends Controller
 
       return redirect()->route('sales.index', [
          'sale' => $salesCreate->id,
-      ])->withSuccess('Peido cadastrado com sucesso!');
+      ])->withToastSuccess('Pedido cadastrado com sucesso!');
    }
 
    /**
@@ -161,7 +161,7 @@ class SaleController extends Controller
 
       return redirect()->route('sales.show', [
          'sale' => $id,
-      ])->withSuccess('Status atualizado com sucesso!');
+      ])->withToastSuccess('Status atualizado com sucesso!');
    }
 
    public function destroy($id)
@@ -180,7 +180,7 @@ class SaleController extends Controller
 
       $data = $product->searchProductByName($item, $user->company_id);
 
-      echo json_encode($data);
+      return json_encode($data);
    }
 
    private function updateTotalPrice($id, $discount)

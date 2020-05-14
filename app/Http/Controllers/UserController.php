@@ -62,7 +62,7 @@ class UserController extends Controller
 
       return redirect()->route('users.edit', [
          'user' => $userCreate->id,
-      ])->withSuccess('Usuario cadastrado com sucesso!');
+      ])->withToastSuccess('Usuario cadastrado com sucesso!');
    }
 
    /**
@@ -120,7 +120,7 @@ class UserController extends Controller
 
       return redirect()->route('users.edit', [
          'user' => $user->id,
-      ])->withSuccess('Usuario atualizado com sucesso!');
+      ])->withToastSuccess('Usuario atualizado com sucesso!');
    }
 
    /**

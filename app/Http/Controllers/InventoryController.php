@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Inventory as InventoryRequest;
-use App\{Inventory, InventoryHistory};
+use App\{Inventory, InventoryHistory, SaleProduct};
 use Illuminate\Support\Facades\{Auth, DB};
 
 class InventoryController extends Controller
@@ -55,7 +55,7 @@ class InventoryController extends Controller
 
       return redirect()->route('inventories.edit', [
          'inventory' => $createProduct->id,
-      ])->withSuccess('Producto Cadastro com Sucesso!');
+      ])->withToastSuccess('Producto Cadastro com Sucesso!');
    }
 
    /**
@@ -104,7 +104,7 @@ class InventoryController extends Controller
 
       return redirect()->route('inventories.edit', [
          'inventory' => $productUpdate->id,
-      ])->withSuccess('Producto Atualizado com Sucesso!');
+      ])->withToastSuccess('Producto Atualizado com Sucesso!');
    }
 
    /**
@@ -117,9 +117,12 @@ class InventoryController extends Controller
    {
       $product = Inventory::find($id);
 
+      if(SaleProduct::where('inventory_id', $id)->count() > 0){
+         return back()->withToastWarning('Produto não pode ser excluído!');
+      }
       $product->delete();
 
-      return back()->withSuccess('Produto excluído com sucesso!');
+      return back()->withToastSuccess('Produto excluído com sucesso!');
    }
 
 
