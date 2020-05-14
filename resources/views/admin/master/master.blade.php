@@ -149,6 +149,7 @@
    <script src="{{ asset('assets/js/jquery.js') }}"></script>
    <script src="{{ asset('assets/js/libs.js') }}"></script>
    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+   <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}" defer></script>
 
    @stack('js')
 </body>

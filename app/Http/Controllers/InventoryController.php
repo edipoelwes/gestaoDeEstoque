@@ -119,7 +119,7 @@ class InventoryController extends Controller
 
       $product->delete();
 
-      return back()->withToastSuccess('Produto excluído com sucesso!');
+      return back()->withSuccess('Produto excluído com sucesso!');
    }
 
 
