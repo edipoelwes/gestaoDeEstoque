@@ -20,6 +20,8 @@ Route::post('login', 'AuthController@login')->name('login.do');
 Route::middleware('auth')->group(function () {
    Route::get('home', 'AuthController@home')->name('home');
 
+   Route::get('icons', 'AuthController@icon')->name('icons');
+
    Route::get('users/team', 'UserController@team')->name('users.team');
    Route::get('search-products', 'SaleController@search_products')->name('sales.search-products');
    Route::put('details-status/{sale}', 'SaleController@changeStatus')->name('sales.details-status');
@@ -30,6 +32,7 @@ Route::middleware('auth')->group(function () {
       'clients' => 'ClientController',
       'companies' => 'CompanyController',
       'inventories' => 'InventoryController',
+      'purchases' => 'PurchaseController',
    ]);
 });
 

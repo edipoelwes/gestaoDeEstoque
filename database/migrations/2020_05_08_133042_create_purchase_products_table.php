@@ -17,16 +17,17 @@ class CreatePurchaseProductsTable extends Migration
          $table->id();
          $table->unsignedBigInteger('company_id');
          $table->unsignedBigInteger('purchase_id');
+         $table->unsignedBigInteger('inventory_id');
 
-         $table->string('name');
          $table->integer('amount');
-         $table->decimal('purchase_price', 10, 2);
+         $table->decimal('sub_total', 10, 2)->default(0);
 
          $table->timestamps();
          $table->softDeletes();
 
          $table->foreign('company_id')->references('id')->on('companies');
          $table->foreign('purchase_id')->references('id')->on('purchases');
+         $table->foreign('inventory_id')->references('id')->on('inventories');
       });
    }
 

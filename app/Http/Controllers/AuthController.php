@@ -64,4 +64,10 @@ class AuthController extends Controller
          'last_login_ip' => $ip
       ]);
    }
+
+
+   public function icon()
+   {
+      return view('admin.icons');
+   }
 }

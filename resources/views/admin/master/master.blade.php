@@ -81,34 +81,20 @@
             </li>
 
             <li class="dash_sidebar_nav_item {{ isActive('sales') }}">
-               <a class="icon-home" href="{{ route('sales.index') }}">Vendas</a>
+               <a class="icon-cart-plus" href="{{ route('sales.index') }}">Vendas</a>
                <ul class="dash_sidebar_nav_submenu">
                   <li class="{{ isActive('sales.index') }}"><a href="{{ route('sales.index') }}">Vendas</a></li>
                   <li class="{{ isActive('sales.create') }}"><a href="{{ route('sales.create') }}">Criar Novo</a></li>
                </ul>
             </li>
 
-            {{-- <li class="dash_sidebar_nav_item {{ isActive('admin.stocks') }}"><a class="icon-home"
-               href="{{ route('admin.stocks.index') }}">Entrada</a>
-            <ul class="dash_sidebar_nav_submenu">
-               <li class="{{ isActive('admin.stocks.index') }}"><a href="{{ route('admin.stocks.index') }}">Ver
-                     Todos</a></li>
-               <li class="{{ isActive('admin.stocks.create') }}"><a href="{{ route('admin.stocks.create') }}">Criar
-                     Novo</a>
-               </li>
-            </ul>
-            </li> --}}
-
-            {{-- <li class="dash_sidebar_nav_item {{ isActive('admin.sales') }}"><a class="icon-home"
-               href="{{ route('admin.stocks.index') }}">Vendas</a>
-            <ul class="dash_sidebar_nav_submenu">
-               <li class="{{ isActive('admin.sales.index') }}"><a href="{{ route('admin.sales.index') }}">Ver
-                     Todos</a></li>
-               <li class="{{ isActive('admin.sales.create') }}"><a href="{{ route('admin.sales.create') }}">Criar
-                     Novo</a>
-               </li>
-            </ul>
-            </li> --}}
+            <li class="dash_sidebar_nav_item {{ isActive('purchases') }}">
+               <a class="icon-shopping-cart" href="{{ route('purchases.index') }}">Compras</a>
+               <ul class="dash_sidebar_nav_submenu">
+                  <li class="{{ isActive('purchases.index') }}"><a href="{{ route('purchases.index') }}">Compras</a></li>
+                  <li class="{{ isActive('purchases.create') }}"><a href="{{ route('purchases.create') }}">Criar Novo</a></li>
+               </ul>
+            </li>
 
             <li class="dash_sidebar_nav_item"><a class="icon-file-text"
                   href="dashboard.php?app=contracts/index">Contratos</a>
@@ -117,9 +103,16 @@
                   <li class=""><a href="dashboard.php?app=contracts/create">Criar Novo</a></li>
                </ul>
             </li>
+
+            <li class="dash_sidebar_nav_item"><a class="icon-reply" href="{{ route('icons') }}">Icons</a></li>
+
+
+
             <li class="dash_sidebar_nav_item"><a class="icon-reply" href="">Ver Site</a></li>
             <li class="dash_sidebar_nav_item"><a class="icon-sign-out on_mobile" href="{{ route('logout') }}">Sair</a>
             </li>
+
+
          </ul>
 
       </aside>

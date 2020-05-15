@@ -18,7 +18,11 @@ class CreatePurchasesTable extends Migration
          $table->unsignedBigInteger('company_id');
          $table->unsignedBigInteger('user_id');
 
-         $table->decimal('total_price', 10, 2)->default(0);
+         $table->integer('status')->nullable();
+         $table->integer('payment_method')->nullable();
+         $table->text('obs')->nullable();
+         $table->string('provider')->nullable();         //provider = fornecedor
+         $table->decimal('total', 10, 2)->default(0);
 
          $table->timestamps();
          $table->softDeletes();
