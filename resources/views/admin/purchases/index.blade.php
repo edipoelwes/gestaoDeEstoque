@@ -1,5 +1,9 @@
 @extends('admin.master.master')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/badge.css') }}">
+@endpush
+
 @section('content')
 
 <section class="dash_content_app">
@@ -15,7 +19,7 @@
             </ul>
          </nav>
 
-         <a href="{{ route('purchases.create') }}" class="btn btn-orange icon-user ml-1">Repor Estoque</a>
+         <a href="{{ route('purchases.create') }}" class="btn btn-orange icon-user ml-1">Comprar</a>
          <button class="btn btn-green icon-search icon-notext ml-1 search_open"></button>
       </div>
    </header>
@@ -28,10 +32,8 @@
             <thead>
                <tr>
                   <th>#</th>
-                  <th>Usuario</th>
-                  <th>Status</th>
                   <th>F. Pagamento</th>
-                  <th>Fornecedor</th>
+                  <th>Status</th>
                   <th>Total</th>
                   <th>Data</th>
                   <th>Detalhes</th>
@@ -41,11 +43,32 @@
                @foreach ($purchases as $purchase)
                <tr>
                   <td>{{ $purchase->id }}</td>
-                  <td>{{ $purchase->user->name }}</td>
-                  <td>{{ $purchase->status }}</td>
-                  <td>{{ $purchase->payment_method }}</td>
-                  <td>{{ $purchase->provider }}</td>
-                  <td>{{ money_br($purchase->total) }}</td>
+                  @php
+                     switch ($purchase->payment_method) {
+                     case 0:
+                        $payment = 'Boleto Bancario';
+                        break;
+                     case 1:
+                        $payment = 'Cartão de Credito';
+                        break;
+                     case 2:
+                        $payment = 'Transferência Bancaria';
+                        break;
+                     case 3:
+                        $payment = 'dinheiro';
+                        break;
+
+                     default:
+                        $payment = 'não Informado';
+                        break;
+                     }
+                  @endphp
+                  <td class="text-orange">{{ $payment }}</td>
+                  <td
+                     class="badge badge-pill {{ ($purchase->status == 0 ? 'badge-warning' : ($purchase->status == 1 ? 'badge-success' : 'badge-danger')) }}">
+                     {{ ($purchase->status == 0 ? 'pendente' : ($purchase->status == 1 ? 'confirmado' : 'cancelado')) }}
+                  </td>
+                  <td>R$ {{ money_br($purchase->total) }}</td>
                   <td>{{ date_br($purchase->created_at) }}</td>
                   <td><a href="{{ route('purchases.show', ['purchase' => $purchase->id]) }}"
                         class="icon-file-text text-orange"></a>

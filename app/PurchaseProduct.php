@@ -16,4 +16,9 @@ class PurchaseProduct extends Model
       'amount',
       'sub_total',
    ];
+
+   public function inventory ()
+   {
+      return $this->belongsTo(Inventory::class);
+   }
 }

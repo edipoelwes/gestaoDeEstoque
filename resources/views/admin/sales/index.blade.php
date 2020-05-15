@@ -46,8 +46,7 @@
                   <td>{{ $sale->id }}</td>
                   <td class="text-orange"> {{ $sale->client->name  }}</td>
                   <td>{{ money_br($sale->total_price) }}</td>
-                  <td
-                     class="badge badge-pill {{ ($sale->status == 0 ? 'badge-warning' : ($sale->status == 1 ? 'badge-success' : 'badge-danger')) }}">
+                  <td class="badge badge-pill {{ ($sale->status == 0 ? 'badge-warning' : ($sale->status == 1 ? 'badge-success' : 'badge-danger')) }}">
                      {{ ($sale->status == 0 ? 'pendente' : ($sale->status == 1 ? 'confirmado' : 'cancelado')) }}</td>
                   <td>{{ $sale->user->name }}</td>
                   <td>{{ date_br($sale->created_at) }}</td>

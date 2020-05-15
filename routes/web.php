@@ -24,7 +24,8 @@ Route::middleware('auth')->group(function () {
 
    Route::get('users/team', 'UserController@team')->name('users.team');
    Route::get('search-products', 'SaleController@search_products')->name('sales.search-products');
-   Route::put('details-status/{sale}', 'SaleController@changeStatus')->name('sales.details-status');
+   Route::put('details-status-sale/{sale}', 'SaleController@changeStatus')->name('sales.details-status');
+   Route::put('details-status-purchase/{purchase}', 'PurchaseController@changeStatus')->name('purchases.details-status');
    //Route::get('details/{sale}', 'SaleController@details')->name('sales.details');
    Route::resources([
       'sales' => 'SaleController',

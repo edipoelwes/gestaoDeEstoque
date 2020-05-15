@@ -9,7 +9,8 @@ class PaymentMethod extends Model
    const TYPES = [
       ['id' => 0, 'name' => 'Boleto Bancario'],
       ['id' => 1, 'name' => 'Cartão de Credito'],
-      ['id' => 2, 'name' => 'Avísta'],
+      ['id' => 2, 'name' => 'Transferência Bancaria'],
+      ['id' => 3, 'name' => 'Dinheiro'],
    ];
 
    public static function all($columns = [])

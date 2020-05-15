@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\{Inventory, PaymentMethod, Purchase, PurchaseProduct, Status};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\{Auth, DB};
 
 class PurchaseController extends Controller
 {
@@ -95,7 +94,39 @@ class PurchaseController extends Controller
     */
    public function show($id)
    {
-      //
+      return view('admin.purchases.details', [
+         'products' => PurchaseProduct::where([['purchase_id', $id], ['company_id', Auth::user()->company_id]])->get(),
+         'purchase' => Purchase::where([['id', $id], ['company_id', Auth::user()->company_id]])->first(),
+         'status' => Status::all(),
+      ]);
+   }
+
+   public function changeStatus(Request $request, $id)
+   {
+      $st = $request->only('status');
+      $status = Purchase::find($id);
+      $status->status = $st['status'];
+      $status->save();
+
+      if ($status->status == 2) {
+
+         $products = DB::table('purchase_products')
+            ->select('amount', 'inventory_id', 'company_id')
+            ->where([['purchase_id', $id], ['company_id', $status->company_id]])
+            ->get();
+
+         foreach ($products as $product) {
+
+            $inventory = Inventory::find($product->inventory_id);
+
+            $inventory->amount -= $product->amount;
+            $inventory->save();
+         }
+      }
+
+      return redirect()->route('purchases.show', [
+         'purchase' => $id,
+      ])->withToastSuccess('Status atualizado com sucesso!');
    }
 
    /**
@@ -132,13 +163,13 @@ class PurchaseController extends Controller
       //
    }
 
+
    private function upInventory($id, $company_id, $amount)
    {
       $product_inventory = DB::table('inventories')
          ->select('amount')
          ->where([['id', $id], ['company_id', $company_id]])
          ->first();
-
 
       $total = $product_inventory->amount + $amount;
 
