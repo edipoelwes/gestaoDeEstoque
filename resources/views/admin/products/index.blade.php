@@ -21,12 +21,8 @@
 
          <a href="{{ route('inventories.create') }}" class="btn btn-orange icon-user ml-1">Cadastrar Produto</a>
 
-         <a href="{{ route('inventories.create') }}" class="btn btn-blue icon-user ml-1">Entrada de Produto</a>
-         <button class="btn btn-green icon-search icon-notext ml-1 search_open"></button>
       </div>
    </header>
-
-   {{-- @include('admin.users.filter') --}}
 
    <div class="dash_content_app_box">
       <div class="dash_content_app_box_stage">
@@ -56,13 +52,11 @@
                   <td class="badge badge-pill badge-primary">{{ $product->min_amount }}</td>
 
                   <td class="text-center">
-                     {{-- <a href="{{ route('inventories.edit', ['inventory' => $product->id]) }}" class="btn btn-sm
-                     btn-blue"
+                     <a href="{{ route('inventories.edit', ['inventory' => $product->id]) }}" class="btn btn-sm btn-blue icon-pencil-square-o"
                      title="Editar Usuário">
-                     <i class="fa fa-edit"></i>editar
-                     </a> --}}
+                     </a>
 
-                     <a href="javascript:;" class="icon-trash text-orange" onclick="confirmDelete({{ $product->id }})"
+                     <a href="javascript:;" class="btn btn-sm btn-orange icon-trash" onclick="confirmDelete({{ $product->id }})"
                         title="Excluir Usuário">
                      </a>
 

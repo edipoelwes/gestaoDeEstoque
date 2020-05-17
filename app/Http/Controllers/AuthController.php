@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth, DB};
 use App\Http\Controllers\Controller;
+use App\Sale;
 
 class AuthController extends Controller
 {
    public function home()
    {
-      return view('admin.dashboard');
+      $sales = Sale::where('company_id', Auth::user()->company_id)->get();
+
+      return view('admin.dashboard', [
+         'sales' => $sales,
+      ]);
    }
 
    public function loginForm()

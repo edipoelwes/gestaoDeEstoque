@@ -9,6 +9,8 @@
    <link rel="stylesheet" href="{{ asset('assets/css/libs.css') }}">
    <link rel="stylesheet" href="{{ asset('assets/css/boot.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+   <link rel="stylesheet" href="{{ asset('assets/css/badge.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/css/tables.css') }}">
 
    @stack('styles')
 

@@ -33,6 +33,40 @@
 
    <section class="dash_content_app" style="margin-top: 40px;">
       <header class="dash_content_app_header">
+         <h2 class="icon-tachometer">Últimos vendas Realizadas</h2>
+      </header>
+
+      <div class="dash_content_app_box">
+         <div class="dash_content_app_box_stage">
+            <table id="dataTable" class="nowrap hover stripe" width="100" style="width: 100% !important;">
+               <thead>
+                  <tr>
+                     <th>#</th>
+                     <th>Cliente</th>
+                     <th>Status</th>
+                     <th>Total</th>
+                     <th>Data</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  @foreach ($sales as $sale)
+                  <tr>
+                     <td>{{ $sale->id }}</td>
+                     <td>{{ $sale->client->name }}</td>
+                     <td class="badge badge-pill {{ ($sale->status == 0 ? 'badge-warning' : ($sale->status == 1 ? 'badge-success' : 'badge-danger')) }}">
+                        {{ ($sale->status == 0 ? 'pendente' : ($sale->status == 1 ? 'confirmado' : 'cancelado')) }}</td>
+                     <td>{{ money_br($sale->total_price) }}</td>
+                     <td>{{ date_br($sale->created_at) }}</td>
+                  </tr>
+                  @endforeach
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </section>
+
+   {{-- <section class="dash_content_app" style="margin-top: 40px;">
+      <header class="dash_content_app_header">
          <h2 class="icon-tachometer">Últimos Contratos Cadastrados</h2>
       </header>
 
@@ -60,85 +94,7 @@
             </table>
          </div>
       </div>
-   </section>
+   </section> --}}
 
-   <section class="dash_content_app" style="margin-top: 40px;">
-      <header class="dash_content_app_header">
-         <h2 class="icon-tachometer">Últimos Imóveis Cadastrados</h2>
-      </header>
-
-      <div class="dash_content_app_box">
-         <div class="dash_content_app_box_stage">
-            <div class="realty_list">
-               <div class="realty_list_item mt-1 mb-1">
-                  <div class="realty_list_item_actions_stats">
-                     <img src="{{ asset('assets/images/realty.jpeg') }}" alt="">
-                     <ul>
-                        <li>Venda: R$ 1.000,00</li>
-                        <li>Aluguel: R$ 1.000,00</li>
-                     </ul>
-                  </div>
-
-                  <div class="realty_list_item_content">
-                     <h4>#1 Casa Residencial - Campeche</h4>
-
-                     <div class="realty_list_item_card">
-                        <div class="realty_list_item_card_image">
-                           <span class="icon-realty-location"></span>
-                        </div>
-                        <div class="realty_list_item_card_content">
-                           <span class="realty_list_item_description_title">Bairro:</span>
-                           <span class="realty_list_item_description_content">Campeche</span>
-                        </div>
-                     </div>
-
-                     <div class="realty_list_item_card">
-                        <div class="realty_list_item_card_image">
-                           <span class="icon-realty-util-area"></span>
-                        </div>
-                        <div class="realty_list_item_card_content">
-                           <span class="realty_list_item_description_title">Área Útil:</span>
-                           <span class="realty_list_item_description_content">300 m&sup2;</span>
-                        </div>
-                     </div>
-
-                     <div class="realty_list_item_card">
-                        <div class="realty_list_item_card_image">
-                           <span class="icon-realty-bed"></span>
-                        </div>
-                        <div class="realty_list_item_card_content">
-                           <span class="realty_list_item_description_title">Domitórios:</span>
-                           <span class="realty_list_item_description_content">2 Quartos<br><span>Sendo 1
-                                 suítes</span></span>
-                        </div>
-                     </div>
-
-                     <div class="realty_list_item_card">
-                        <div class="realty_list_item_card_image">
-                           <span class="icon-realty-garage"></span>
-                        </div>
-                        <div class="realty_list_item_card_content">
-                           <span class="realty_list_item_description_title">Garagem:</span>
-                           <span class="realty_list_item_description_content">2 Vagas<br><span>Sendo 1
-                                 cobertas</span></span>
-                        </div>
-                     </div>
-
-                  </div>
-
-                  <div class="realty_list_item_actions">
-                     <ul>
-                        <li class="icon-eye">1234 Visualizações</li>
-                     </ul>
-                     <div>
-                        <a href="" class="btn btn-blue icon-eye">Visualizar Imóvel</a>
-                        <a href="" class="btn btn-green icon-pencil-square-o">Editar Imóvel</a>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </section>
 </div>
 @endsection
