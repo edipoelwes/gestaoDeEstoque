@@ -22,20 +22,6 @@
    <div class="dash_content_app_box">
       <div class="nav">
 
-         @if($errors->all())
-         @foreach($errors->all() as $error)
-         @message(['color' => 'orange'])
-         <p class="icon-asterisk">{{ $error }}</p>
-         @endmessage
-         @endforeach
-         @endif
-
-         @if(session()->exists('message'))
-         @message(['color' => session()->get('color')])
-         <p class="icon-asterisk">{{ session()->get('message') }}</p>
-         @endmessage
-         @endif
-
          <ul class="nav_tabs">
             <li class="nav_tabs_item">
                <a href="#data" class="nav_tabs_item_link active">Dados Cadastrais</a>

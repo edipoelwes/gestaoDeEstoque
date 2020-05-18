@@ -46,6 +46,7 @@
                      <th>Status</th>
                      <th>Total</th>
                      <th>Data</th>
+                     <th>Detalhes</th>
                   </tr>
                </thead>
                <tbody>
@@ -55,8 +56,9 @@
                      <td>{{ $sale->client->name }}</td>
                      <td class="badge badge-pill {{ ($sale->status == 0 ? 'badge-warning' : ($sale->status == 1 ? 'badge-success' : 'badge-danger')) }}">
                         {{ ($sale->status == 0 ? 'pendente' : ($sale->status == 1 ? 'confirmado' : 'cancelado')) }}</td>
-                     <td>{{ money_br($sale->total_price) }}</td>
+                     <td>R$ {{ money_br($sale->total_price) }}</td>
                      <td>{{ date_br($sale->created_at) }}</td>
+                     <td><a href="{{ route('sales.show', ['sale' => $sale->id]) }}" class="icon-file-text text-orange"></a></td>
                   </tr>
                   @endforeach
                </tbody>

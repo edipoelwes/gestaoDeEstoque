@@ -7,6 +7,7 @@ use App\Http\Requests\User as UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\{Auth, Storage};
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -131,6 +132,47 @@ class UserController extends Controller
     */
    public function destroy($id)
    {
-      //
+      $userDelete = User::where('id', $id)->first();
+      $userDelete->delete();
+
+      return back()->withToastSuccess('Usuario excluído com sucesso!');
+   }
+
+   public function roles ($user)
+   {
+      $user = User::where('id', $user)->first();
+      $roles = Role::all();
+
+      foreach($roles as $role) {
+         if($user->hasRole($role->name)) {
+            $role->can = true;
+         } else {
+            $role->can = false;
+         }
+      }
+      return view('admin.users.roles', [
+         'user' => $user,
+         'roles' => $roles,
+      ]);
+   }
+
+   public function rolesSync (Request $request, $user)
+   {
+      $rolesRequest = $request->except(['_token', '_method']);
+
+      foreach($rolesRequest as $key => $value) {
+         $roles[] = Role::where('id', $key)->first();
+      }
+
+      $user = User::where('id', $user)->first();
+
+      if(!empty($roles)) {
+         $user->syncRoles($roles);
+      } else {
+         $user->syncRoles(null);
+      }
+      return redirect()->route('users.roles', [
+         'user' => $user->id,
+      ])->withToastSuccess('Perfil sincronizado com sucesso!');
    }
 }

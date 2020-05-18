@@ -20,6 +20,19 @@ Route::post('login', 'AuthController@login')->name('login.do');
 Route::middleware('auth')->group(function () {
    Route::get('home', 'AuthController@home')->name('home');
 
+   /**Rota de permissoes de acesso */
+   Route::get('roles/{role}/permissions', 'RoleController@permissions')->name('roles.permission');
+   Route::put('roles/{role}/permissions/sync', 'RoleController@permissionsSync')->name('roles.permissionSync');
+
+   Route::get('users/{user}/roles', 'UserController@roles')->name('users.roles');
+   Route::put('users/{user}/roles/sync', 'UserController@rolesSync')->name('users.rolesSync');
+
+   Route::resources([
+      'roles' => 'RoleController',
+      'permissions' => 'PermissionController',
+   ]);
+   /*********/
+
    Route::get('icons', 'AuthController@icon')->name('icons');
 
    Route::get('users/team', 'UserController@team')->name('users.team');

@@ -49,6 +49,16 @@
                <a class="icon-tachometer" href="{{ route('home') }}">Dashboard</a>
             </li>
 
+            <li class="dash_sidebar_nav_item {{ isActive('permissions') }} {{ isActive('roles') }}">
+               <a class="icon-key" href="{{ route('permissions.index') }}">Perfil / Permissões</a>
+               <ul class="dash_sidebar_nav_submenu">
+                  <li class="{{ isActive('roles.index') }}"><a href="{{ route('roles.index') }}">Perfil</a>
+                  </li>
+                  <li class="{{ isActive('permissions.index') }}"><a href="{{ route('permissions.index') }}">Permissão</a>
+                  </li>
+               </ul>
+            </li>
+
             <li class="dash_sidebar_nav_item {{ isActive('users') }} {{ isActive('companies') }}"><a class="icon-user"
                   href="{{ route('users.index') }}">Usuarios</a>
                <ul class="dash_sidebar_nav_submenu">
@@ -145,6 +155,7 @@
    <script src="{{ asset('assets/js/libs.js') }}"></script>
    <script src="{{ asset('assets/js/scripts.js') }}"></script>
    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}" defer></script>
+   <script src="{{ asset('assets/js/functions.js') }}" defer></script>
 
    @stack('js')
 </body>

@@ -30,18 +30,35 @@
                   <th>Nome Completo</th>
                   <th>CPF</th>
                   <th>E-mail</th>
-                  <th>Nascimento</th>
+                  <th>Ações</th>
                </tr>
             </thead>
             <tbody>
                @foreach ($users as $user)
                <tr>
                   <td>{{ $user->id }}</td>
-                  <td><a href="{{ route('users.edit', ['user' => $user->id]) }}" class="text-orange">
-                        {{ $user->name  }}</a></td>
+                  <td class="text-orange">{{ $user->name  }}</td>
                   <td>{{ $user->document }}</td>
                   <td><a href="mailto:{{ $user->email }}" class="text-orange">{{  $user->email  }}</a></td>
-                  <td>{{ $user->date_of_birth }}</td>
+                  <td>
+                     <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="text-blue icon-pencil-square-o"
+                        title="Editar Usuario">
+                     </a>
+
+                     <a href="{{ route('users.roles', ['user' => $user->id]) }}" class="text-green icon-user"
+                        title="Perfis">
+                     </a>
+
+                     <a href="javascript:;" class="text-orange icon-trash" onclick="confirmDelete({{ $user->id }})"
+                        title="Excluir Usuario">
+                     </a>
+
+                     <form id="btn-delete-{{ $user->id }}" action="{{ route('users.destroy', ['user' => $user->id]) }}"
+                        method="post" class="hidden">
+                        @method('DELETE')
+                        @csrf
+                     </form>
+                  </td>
                </tr>
                @endforeach
             </tbody>

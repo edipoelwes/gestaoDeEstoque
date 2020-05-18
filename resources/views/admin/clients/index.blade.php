@@ -29,19 +29,34 @@
                   <th>#</th>
                   <th>Nome Completo</th>
                   <th>CPF</th>
-                  <th>E-mail</th>
                   <th>Telefone</th>
+                  <th>Ações</th>
                </tr>
             </thead>
             <tbody>
                @foreach ($clients as $client)
                <tr>
                   <td>{{ $client->id }}</td>
-                  <td><a href="{{ route('clients.edit', ['client' => $client->id]) }}" class="text-orange">
-                        {{ $client->name  }}</a></td>
+                  <td class="text-orange">{{ $client->name  }}</td>
                   <td>{{ $client->document }}</td>
-                  <td><a href="mailto:{{ $client->email }}" class="text-orange">{{  $client->email  }}</a></td>
-                  <td>{{ $client->phone }}</td>
+                  <td class="phone">{{ $client->phone }}</td>
+                  <td>
+
+                     <a href="{{ route('clients.edit', ['client' => $client->id]) }}" class="text-blue icon-pencil-square-o"
+                        title="Editar Usuário">
+                        </a>
+
+                     <a href="javascript:;" class="text-orange icon-trash" onclick="confirmDelete({{ $client->id }})"
+                        title="Excluir Usuário">
+                     </a>
+
+                     <form id="btn-delete-{{ $client->id }}"
+                        action="{{ route('clients.destroy', ['client' => $client->id]) }}" method="post"
+                        class="hidden">
+                        @method('DELETE')
+                        @csrf
+                     </form>
+                  </td>
                </tr>
                @endforeach
             </tbody>
