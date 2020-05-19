@@ -43,6 +43,18 @@ class PermissionSeeder extends Seeder
          ['name' => 'Editar Compra', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
          ['name' => 'Vizualizar Compras', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
          ['name' => 'Deletar Compra', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+
+         /** Permissoes de Perfil */
+         ['name' => 'Cadastrar Perfil', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+         ['name' => 'Editar Perfil', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+         ['name' => 'Vizualizar Perfil', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+         ['name' => 'Deletar Perfil', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+
+         /** Permissoes de Permissoes */
+         ['name' => 'Cadastrar Permissão', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+         ['name' => 'Editar Permissão', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+         ['name' => 'Vizualizar Permissões', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+         ['name' => 'Deletar Permissão', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
       ]);
    }
 }

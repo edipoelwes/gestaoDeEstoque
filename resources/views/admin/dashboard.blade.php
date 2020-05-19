@@ -10,17 +10,19 @@
       <div class="dash_content_app_box">
          <section class="app_dash_home_stats">
             <article class="control radius">
-               <h4 class="icon-users">Clientes</h4>
-               <p><b>Locadores:</b> 100</p>
-               <p><b>Locatários:</b> 100</p>
-               <p><b>Time:</b> 3</p>
+               <h4 class="text-center icon-users">Total Mensal</h4>
+               <p><b>Mês</b> {{ $month }}</p>
+               <h1 class="text-center" style="margin-top: 50px"><p class="text-orange">R$ <span class="text-blue">{{ money_br($total - $discount) }}</span></p></h1>
             </article>
 
             <article class="blog radius">
-               <h4 class="icon-home">Imóveis</h4>
-               <p><b>Disponíveis:</b> 100</p>
-               <p><b>Locados:</b> 100</p>
-               <p><b>Total:</b> 200</p>
+               <h4 class="text-center icon-cart-plus">Vendas Mensal</h4>
+               <p><b>Vendas Confirmadas:</b> {{ $amount }}</p>
+               <p><b>Vendas Pendentes:</b> {{ $amount }}</p>
+               <p><b>Total Vendas:</b> R$ {{ money_br($total) }}</p>
+               <p><b>Total Desconto:</b> R$ {{ money_br($discount) }}</p>
+               <p><b>Total:</b> R$ {{ money_br($total - $discount) }}</p>
+
             </article>
 
             <article class="users radius">

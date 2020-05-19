@@ -22,6 +22,7 @@ class CreateSalesTable extends Migration
          $table->decimal('total_price', 10, 2)->default(0);
          $table->integer('status')->nullable();
          $table->text('description')->nullable();
+         $table->string('month_year')->default(strval(date('m/yy', strtotime(now()))));
          $table->timestamps();
          $table->softDeletes();
 

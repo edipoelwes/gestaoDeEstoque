@@ -40,7 +40,7 @@
             <img class="dash_sidebar_user_thumb" src="{{ url(asset('assets/images/avatar.jpg')) }}" alt="" title="" />
 
             <h1 class="dash_sidebar_user_name">
-               <a href="">Edipo Elwes</a>
+               <a href="">{{ Auth::user()->name }}</a>
             </h1>
          </article>
 
@@ -49,6 +49,7 @@
                <a class="icon-tachometer" href="{{ route('home') }}">Dashboard</a>
             </li>
 
+            {{-- @can('Visualizar Permissões') --}}
             <li class="dash_sidebar_nav_item {{ isActive('permissions') }} {{ isActive('roles') }}">
                <a class="icon-cogs" href="{{ route('roles.index') }}">Configurações</a>
                <ul class="dash_sidebar_nav_submenu">
@@ -56,6 +57,8 @@
                   <li class="{{ isActive('permissions.index') }}"><a href="{{ route('permissions.index') }}">Permissões</a></li>
                </ul>
             </li>
+            {{-- @endcan --}}
+
 
             <li class="dash_sidebar_nav_item {{ isActive('users') }} {{ isActive('companies') }}"><a class="icon-user"
                   href="{{ route('users.index') }}">Usuarios</a>
