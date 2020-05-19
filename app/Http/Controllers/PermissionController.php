@@ -39,9 +39,14 @@ class PermissionController extends Controller
     */
    public function store(Request $request)
    {
+      $permission = Permission::where('name', $request->name)->get();
+      if($permission->count() > 0) {
+         return back()->withToastWarning('Permissão ja existe! Tente outro nome de permissão!');
+      }
+
       $permissionCreate = Permission::create($request->all());
 
-      return redirect()->route('permissions.edit', [
+      return redirect()->route('permissions.index', [
          'permission' => $permissionCreate->id,
       ])->withToastSuccess('Permissão Cadastrada com Sucesso!');
    }
@@ -81,6 +86,11 @@ class PermissionController extends Controller
     */
    public function update(Request $request, $id)
    {
+      $permission = Permission::where([['name', $request->name], ['id', '!=', $id]])->get();
+      if($permission->count() > 0) {
+         return back()->withToastWarning('Permissão ja existe! Tente outro nome de permissão!');
+      }
+
       $permissionCreate = Permission::where('id', $id)->first();
       $permissionCreate->update($request->all());
 

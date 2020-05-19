@@ -50,12 +50,10 @@
             </li>
 
             <li class="dash_sidebar_nav_item {{ isActive('permissions') }} {{ isActive('roles') }}">
-               <a class="icon-key" href="{{ route('permissions.index') }}">Perfil / Permissões</a>
+               <a class="icon-cogs" href="{{ route('roles.index') }}">Configurações</a>
                <ul class="dash_sidebar_nav_submenu">
-                  <li class="{{ isActive('roles.index') }}"><a href="{{ route('roles.index') }}">Perfil</a>
-                  </li>
-                  <li class="{{ isActive('permissions.index') }}"><a href="{{ route('permissions.index') }}">Permissão</a>
-                  </li>
+                  <li class="{{ isActive('roles.index') }}"><a href="{{ route('roles.index') }}">Perfil</a></li>
+                  <li class="{{ isActive('permissions.index') }}"><a href="{{ route('permissions.index') }}">Permissões</a></li>
                </ul>
             </li>
 
@@ -82,6 +80,7 @@
                </ul>
             </li>
 
+            @can('Vizualizar Produtos')
             <li class="dash_sidebar_nav_item {{ isActive('inventories') }}">
                <a class="icon-home" href="{{ route('inventories.index') }}">Produtos</a>
                <ul class="dash_sidebar_nav_submenu">
@@ -91,6 +90,7 @@
                         Novo</a></li>
                </ul>
             </li>
+            @endcan
 
             <li class="dash_sidebar_nav_item {{ isActive('sales') }}">
                <a class="icon-cart-plus" href="{{ route('sales.index') }}">Vendas</a>
@@ -100,13 +100,17 @@
                </ul>
             </li>
 
+            @can('Vizualizar Compras')
             <li class="dash_sidebar_nav_item {{ isActive('purchases') }}">
                <a class="icon-shopping-cart" href="{{ route('purchases.index') }}">Compras</a>
                <ul class="dash_sidebar_nav_submenu">
-                  <li class="{{ isActive('purchases.index') }}"><a href="{{ route('purchases.index') }}">Compras</a></li>
-                  <li class="{{ isActive('purchases.create') }}"><a href="{{ route('purchases.create') }}">Criar Novo</a></li>
+                  <li class="{{ isActive('purchases.index') }}"><a href="{{ route('purchases.index') }}">Compras</a>
+                  </li>
+                  <li class="{{ isActive('purchases.create') }}"><a href="{{ route('purchases.create') }}">Criar
+                        Novo</a></li>
                </ul>
             </li>
+            @endcan
 
             <li class="dash_sidebar_nav_item"><a class="icon-file-text"
                   href="dashboard.php?app=contracts/index">Contratos</a>

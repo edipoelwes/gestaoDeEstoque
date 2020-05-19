@@ -39,6 +39,11 @@ class RoleController extends Controller
     */
    public function store(Request $request)
    {
+      $role = Role::where('name', $request->name)->get();
+      if($role->count() > 0) {
+         return back()->withToastWarning('Perfil ja existe!');
+      }
+
       $roleCreate = Role::create($request->all());
 
       return redirect()->route('roles.edit', [
@@ -80,6 +85,11 @@ class RoleController extends Controller
     */
    public function update(Request $request, $id)
    {
+      $role = Role::where([['name', $request->name], ['id', '!=', $id]])->get();
+      if($role->count() > 0) {
+         return back()->withToastWarning('Perfil ja existe!');
+      }
+
       $roleCreate = Role::where('id', $id)->first();
       $roleCreate->update($request->all());
 

@@ -35,7 +35,6 @@
                   <th>Preço</th>
                   <th>Quant. Min</th>
                   <th class="text-center">Ações</th>
-
                </tr>
             </thead>
             <tbody>
@@ -51,14 +50,19 @@
                   <td>R$ {{ $product->price }}</td>
                   <td class="badge badge-pill badge-primary">{{ $product->min_amount }}</td>
 
-                  <td class="text-center">
-                     <a href="{{ route('inventories.edit', ['inventory' => $product->id]) }}" class="btn btn-sm btn-blue icon-pencil-square-o"
+                  <td>
+
+                     @can('Editar Produto')
+                     <a href="{{ route('inventories.edit', ['inventory' => $product->id]) }}" class="text-blue icon-pencil-square-o"
                      title="Editar Usuário">
                      </a>
+                     @endcan
 
-                     <a href="javascript:;" class="btn btn-sm btn-orange icon-trash" onclick="confirmDelete({{ $product->id }})"
+                     @can('Deletar Produto')
+                     <a href="javascript:;" class="text-orange icon-trash" onclick="confirmDelete({{ $product->id }})"
                         title="Excluir Usuário">
                      </a>
+                     @endcan
 
                      <form id="btn-delete-{{ $product->id }}"
                         action="{{ route('inventories.destroy', ['inventory' => $product->id]) }}" method="post"

@@ -16,10 +16,10 @@ class CompanySeeder extends Seeder
          [
             'social_name' => 'Sonhos de Ninar LTDA',
             'alias_name' => 'Sonhos de Ninar',
-            'document_company' => '63.565.720/0001-14',
+            'document_company' => '63565720000114',
             'document_company_secondary' => '5026485-1',
             /** address */
-            'zipcode' => '64017-705',
+            'zipcode' => '64017705',
             'street' => 'Rua Cristo Redentor',
             'number' => '609',
             'neighborhood' => 'Três Andares',
