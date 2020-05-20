@@ -109,23 +109,17 @@
                <ul class="dash_sidebar_nav_submenu">
                   <li class="{{ isActive('purchases.index') }}"><a href="{{ route('purchases.index') }}">Compras</a>
                   </li>
-                  <li class="{{ isActive('purchases.create') }}"><a href="{{ route('purchases.create') }}">Criar
-                        Novo</a></li>
+                  <li class="{{ isActive('purchases.create') }}"><a href="{{ route('purchases.create') }}">Criar Novo</a></li>
                </ul>
             </li>
             @endcan
 
-            <li class="dash_sidebar_nav_item"><a class="icon-file-text"
-                  href="dashboard.php?app=contracts/index">Contratos</a>
+            <li class="dash_sidebar_nav_item {{ isActive('reports') }}"><a class="icon-file-text"
+                  href="{{ route('reports.index') }}">Relatorios</a>
                <ul class="dash_sidebar_nav_submenu">
-                  <li class=""><a href="dashboard.php?app=contracts/index">Ver Todos</a></li>
-                  <li class=""><a href="dashboard.php?app=contracts/create">Criar Novo</a></li>
+                  <li class="{{ isActive('reports.index') }}"><a href="{{ route('reports.index') }}">Opções de Relatorios</a></li>
                </ul>
             </li>
-
-            <li class="dash_sidebar_nav_item"><a class="icon-reply" href="{{ route('icons') }}">Icons</a></li>
-
-
 
             <li class="dash_sidebar_nav_item"><a class="icon-reply" href="">Ver Site</a></li>
             <li class="dash_sidebar_nav_item"><a class="icon-sign-out on_mobile" href="{{ route('logout') }}">Sair</a>

@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
       'inventories' => 'InventoryController',
       'purchases' => 'PurchaseController',
    ]);
+
+   Route::get('reports', 'ReportsController@index')->name('reports.index');
+   Route::get('reports-sales', 'ReportsController@salesReport')->name('reports.sales');
 });
 
 /** Logout */
