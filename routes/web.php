@@ -49,8 +49,10 @@ Route::middleware('auth')->group(function () {
       'purchases' => 'PurchaseController',
    ]);
 
+   /** Relatorios */
    Route::get('reports', 'ReportsController@index')->name('reports.index');
    Route::get('reports-sales', 'ReportsController@salesReport')->name('reports.sales');
+   Route::get('reports-sales-pdf', 'ReportsController@salesPdf')->name('reports.sales-pdf');
 });
 
 /** Logout */

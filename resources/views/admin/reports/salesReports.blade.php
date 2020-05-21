@@ -18,7 +18,7 @@
             </ul>
 
 
-            <form action="#" method="get" onsubmit="return openPopup(this)" class="app_form" enctype="multipart/form-data">
+            <form action="{{ route('reports.sales-pdf') }}" method="get" target="_blank" class="app_form" enctype="multipart/form-data">
                <div class="nav_tabs_content">
                   <div id="data">
                      <div class="label_g4">
@@ -44,9 +44,9 @@
                            <span class="legend">Status:</span>
                            <select name="status" class="select2">
                               <option value="">Todos os status</option>
-                              <option value="0">Pendente</option>
                               <option value="1">Confirmado</option>
                               <option value="2">Cancelado</option>
+                              <option value="3">Pendente</option>
                            </select>
                         </label>
 
@@ -55,7 +55,6 @@
                            <select name="order" class="select2">
                               <option value="desc">Mais Recente</option>
                               <option value="asc">Mais Antigo</option>
-                              <option value="status">Status da Venda</option>
                            </select>
                         </label>
                      </div>
@@ -72,17 +71,3 @@
    </section>
 </div>
 @endsection
-
-@push('js')
-<script>
-   var BASE_URL = {!! json_encode(url('/')) !!};
-   function openPopup(obj){
-
-      var data = $(obj).serialize();
-
-      var url = BASE_URL+'/report/sales_pdf?'+data;
-      window.open(url, 'report', "width=700,height=500");
-      return false;
-   }
-</script>
-@endpush

@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
    const TYPES = [
-      ['id' => 0, 'name' => 'Pendente',],
-      ['id' => 1, 'name' => 'Confirmado',],
-      ['id' => 2, 'name' => 'Cancelado',],
+      ['id' => 1, 'name' => 'Confirmado'],
+      ['id' => 2, 'name' => 'Cancelado'],
+      ['id' => 3, 'name' => 'Pendente'],
    ];
 
    public static function all($columns = [])
