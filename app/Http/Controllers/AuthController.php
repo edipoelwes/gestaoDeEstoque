@@ -12,7 +12,11 @@ class AuthController extends Controller
    public function home()
    {
 
-      $sales = Sale::where('company_id', Auth::user()->company_id)->get();
+      $sales = Sale::where([['company_id', Auth::user()->company_id], ['status', '!=', 2]])
+      ->orderBy('created_at', 'desc')
+      ->limit(5)
+      ->get();
+
       $total = Sale::where([
          ['company_id', Auth::user()->company_id],
          ['status', 1],
