@@ -67,8 +67,8 @@
                            <span class="legend">Status:</span>
                            <select name="status" class="select2">
                               <option value="">Selecione o status da venda</option>
-                              <option value="0">Pendente</option>
                               <option value="1">Confirmado</option>
+                              <option value="2">Pendente</option>
                            </select>
                         </label>
 

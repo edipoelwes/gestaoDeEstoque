@@ -52,8 +52,8 @@
                   <tr>
                      <td>{{ $sale->id }}</td>
                      <td>{{ $sale->client->name }}</td>
-                     <td class="badge badge-pill {{ ($sale->status == 3 ? 'badge-warning' : ($sale->status == 1 ? 'badge-success' : 'badge-danger')) }}">
-                        {{ ($sale->status == 3 ? 'pendente' : ($sale->status == 1 ? 'confirmado' : 'cancelado')) }}</td>
+                     <td class="badge badge-pill {{ ($sale->status == 2 ? 'badge-warning' : ($sale->status == 1 ? 'badge-success' : 'badge-danger')) }}">
+                        {{ ($sale->status == 2 ? 'pendente' : ($sale->status == 1 ? 'confirmado' : 'cancelado')) }}</td>
                      <td>R$ {{ money_br($sale->total_price) }}</td>
                      <td>{{ date_br($sale->created_at) }}</td>
                      <td><a href="{{ route('sales.show', ['sale' => $sale->id]) }}" class="icon-file-text text-orange"></a></td>

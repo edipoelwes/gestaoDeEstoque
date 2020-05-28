@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
-use App\Sale;
+use App\{Client, Sale};
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +60,10 @@ class ReportsController extends Controller
             ->orderBy('created_at', $order)
             ->sum('total_price');
 
+         $query['discount'] = Sale::where('company_id', $company)
+            ->orderBy('created_at', $order)
+            ->sum('discount');
+
          return $query;
       } else if (!empty($client) && empty($startDate) && empty($endDate) && empty($status)) {
 
@@ -73,6 +76,10 @@ class ReportsController extends Controller
             ->orderBy('created_at', $order)
             ->sum('total_price');
 
+         $query['discount'] = Sale::where([['company_id', $company], ['client_id', $client]])
+            ->orderBy('created_at', $order)
+            ->sum('discount');
+
          return $query;
       } else if (!empty($client) && empty($startDate) && empty($endDate) && !empty($status)) {
 
@@ -84,6 +91,10 @@ class ReportsController extends Controller
          $query['total'] = Sale::where([['company_id', $company], ['client_id', $client], ['status', $status]])
             ->orderBy('created_at', $order)
             ->sum('total_price');
+
+         $query['discount'] = Sale::where([['company_id', $company], ['client_id', $client], ['status', $status]])
+            ->orderBy('created_at', $order)
+            ->sum('discount');
 
          return $query;
       } else if (!empty($client) && !empty($startDate) && !empty($endDate) && !empty($status)) {
@@ -99,6 +110,11 @@ class ReportsController extends Controller
             ->orderBy('created_at', $order)
             ->sum('total_price');
 
+         $query['discount'] = Sale::where([['company_id', $company], ['client_id', $client], ['status', $status]])
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', $order)
+            ->sum('discount');
+
          return $query;
       } else if (!empty($client) && !empty($startDate) && !empty($endDate) && empty($status)) {
 
@@ -113,6 +129,11 @@ class ReportsController extends Controller
             ->orderBy('created_at', $order)
             ->sum('total_price');
 
+         $query['discount'] = Sale::where([['company_id', $company], ['client_id', $client]])
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', $order)
+            ->sum('discount');
+
          return $query;
       } else if (empty($client) && !empty($startDate) && !empty($endDate) && empty($status)) {
 
@@ -126,6 +147,11 @@ class ReportsController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', $order)
             ->sum('total_price');
+
+         $query['discount'] = Sale::where('company_id', $company)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', $order)
+            ->sum('discount');
 
          return $query;
       } else if (empty($client) && !empty($startDate) && !empty($endDate) && !empty($status)) {
@@ -157,6 +183,10 @@ class ReportsController extends Controller
          $query['total'] = Sale::where([['company_id', $company], ['status', $status]])
             ->orderBy('created_at', $order)
             ->sum('total_price');
+
+         $query['discount'] = Sale::where([['company_id', $company], ['status', $status]])
+            ->orderBy('created_at', $order)
+            ->sum('discount');
 
          return $query;
       }

@@ -49,7 +49,7 @@
             @endphp
             <p><b>Forma de Pagamento:</b> {{ $payment }}</p>
 
-            @if ($purchase->status != 2)
+            @if ($purchase->status != 3)
             <form action="{{ route('purchases.details-status', ['purchase' => $purchase->id]) }}" method="post"
                enctype="multipart/form-data">
                @method('PUT')
@@ -58,17 +58,15 @@
                   <span class="legend"><b>Status:</b></span>
 
                   <select name="status" class="btn btn-large">
-                     @foreach ($status as $item)
-                     <option value="{{ $item->id }}"{{ set_selected($item->id, old('status', $purchase->id ?? null)) }}>
-                        {{ $item->name }}
-                     </option>
-                     @endforeach
+                     <option value="1" {{ ($purchase->status == 1 ? 'selected' : '') }}>Confirmado</option>
+                     <option value="2" {{ ($purchase->status == 2 ? 'selected' : '') }}>Pendente</option>
+                     <option value="3" {{ ($purchase->status == 3 ? 'selected' : '') }}>Cancelado</option>
                   </select>
                </label>
                <button class="btn btn-large btn-blue" type="submit">Atualizar Status</button>
             </form>
             @else
-            <p><b>Status:</b> {{ ($purchase->status == 2 ? 'cancelado' : '') }}</p>
+            <p><b>Status:</b> {{ ($purchase->status == 3 ? 'cancelado' : '') }}</p>
             @endif
 
             <br>

@@ -13,7 +13,7 @@ $factory->define(Sale::class, function (Faker $faker) {
       'client_id' => $faker->numberBetween(1, 30),
       'discount' => $faker->randomFloat(2, 1, 4),
       'total_price' => $faker->randomFloat(2, 10, 50),
-      'status' => $faker->numberBetween(1, 3),
+      'status' => $faker->numberBetween(1, 2),
       'created_at' => $date,
       'updated_at' => $date,
    ];

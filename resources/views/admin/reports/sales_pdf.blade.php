@@ -37,7 +37,7 @@
          <tr>
             <td>{{ $report->id }}</td>
             <td>{{ $report->client->name }}</td>
-            <td>{{ ($report->status == 1 ? 'Confirmado' : ($report->status == 2 ? 'Cancelado' : 'Pendente')) }}</td>
+            <td>{{ ($report->status == 1 ? 'Confirmado' : ($report->status == 2 ? 'Pendente' : 'Cancelado')) }}</td>
             <td>{{ date_br($report->created_at) }}</td>
             <td>R$ {{ money_br($report->discount) }}</td>
             <td>R$ {{ money_br($report->total_price) }}</td>

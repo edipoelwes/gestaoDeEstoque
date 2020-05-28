@@ -8,8 +8,8 @@ class Status extends Model
 {
    const TYPES = [
       ['id' => 1, 'name' => 'Confirmado'],
-      ['id' => 2, 'name' => 'Cancelado'],
-      ['id' => 3, 'name' => 'Pendente'],
+      ['id' => 2, 'name' => 'Pendente'],
+      ['id' => 3, 'name' => 'Cancelado'],
    ];
 
    public static function all($columns = [])

@@ -60,12 +60,9 @@
                         <label class="label">
                            <span class="legend">Status:</span>
                            <select name="status" class="select2">
-                              <option value="">Selecione o status da venda...</option>
-                              @foreach ($status as $item)
-                              <option value="{{ $item->id }}"{{ set_selected($item->id, old('status', $purchase->id ?? null)) }}>
-                                 {{ $item->name }}
-                              </option>
-                              @endforeach
+                              <option value="">Selecione o status da venda</option>
+                              <option value="1">Confirmado</option>
+                              <option value="2">Pendente</option>
                            </select>
                         </label>
 
@@ -82,10 +79,15 @@
                         </label>
                      </div>
 
-                     <div class="label">
+                     <div class="label_g2">
                         <label class="label">
                            <span class="legend">Fornecedores:</span>
                            <input type="text" name="provider" value="{{ old('provider', $product->provider ?? null) }}" />
+                        </label>
+
+                        <label class="label">
+                           <span class="legend">Data de Vencimento:</span>
+                           <input type="date" name="due_date" value="{{ old('due_date', $product->due_date ?? null) }}" />
                         </label>
                      </div>
 

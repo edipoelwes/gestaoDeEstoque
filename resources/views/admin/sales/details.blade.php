@@ -28,7 +28,7 @@
             <p><b>Vendedor:</b> {{ $detail->user->name }}</p>
             <p><b>Cliente:</b> {{ $detail->client->name }}</p>
 
-            @if ($detail->status != 2)
+            @if ($detail->status != 3)
             <form action="{{ route('sales.details-status', ['sale' => $detail->id]) }}" method="post"
                enctype="multipart/form-data">
                @method('PUT')
@@ -37,15 +37,15 @@
                   <span class="legend"><b>Status:</b></span>
 
                   <select name="status" class="btn btn-large">
-                     <option value="0" {{ ($detail->status == 0 ? 'selected' : '') }}>Pendente</option>
                      <option value="1" {{ ($detail->status == 1 ? 'selected' : '') }}>Confirmado</option>
-                     <option value="2" {{ ($detail->status == 2 ? 'selected' : '') }}>Cancelado</option>
+                     <option value="2" {{ ($detail->status == 2 ? 'selected' : '') }}>Pendente</option>
+                     <option value="3" {{ ($detail->status == 3 ? 'selected' : '') }}>Cancelado</option>
                   </select>
                </label>
                <button class="btn btn-large btn-blue" type="submit">Atualizar Status</button>
             </form>
             @else
-            <p><b>Status:</b> {{ ($detail->status == 2 ? 'cancelado' : '') }}</p>
+            <p><b>Status:</b> {{ ($detail->status == 3 ? 'cancelado' : '') }}</p>
             @endif
 
 

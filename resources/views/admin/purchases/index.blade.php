@@ -35,7 +35,7 @@
                   <th>F. Pagamento</th>
                   <th>Status</th>
                   <th>Total</th>
-                  <th>Data</th>
+                  <th>Vencimento</th>
                   <th>Detalhes</th>
                </tr>
             </thead>
@@ -65,8 +65,8 @@
                   @endphp
                   <td class="text-orange">{{ $payment }}</td>
                   <td
-                     class="badge badge-pill {{ ($purchase->status == 0 ? 'badge-warning' : ($purchase->status == 1 ? 'badge-success' : 'badge-danger')) }}">
-                     {{ ($purchase->status == 0 ? 'pendente' : ($purchase->status == 1 ? 'confirmado' : 'cancelado')) }}
+                     class="badge badge-pill {{ ($purchase->status == 3 ? 'badge-danger' : ($purchase->status == 1 ? 'badge-success' : 'badge-warning')) }}">
+                     {{ ($purchase->status == 3 ? 'cancelado' : ($purchase->status == 1 ? 'confirmado' : 'pendente')) }}
                   </td>
                   <td>R$ {{ money_br($purchase->total) }}</td>
                   <td>{{ date_br($purchase->created_at) }}</td>

@@ -49,6 +49,7 @@ class PurchaseController extends Controller
       $purchase['payment_method'] = $data['payment_method'];
       $purchase['obs'] = $data['obs'];
       $purchase['provider'] = $data['provider'];
+      $purchase['due_date'] = $data['due_date'];
 
       $amount = $data['amount'];
       $price = $data['price'];
@@ -124,7 +125,7 @@ class PurchaseController extends Controller
          }
       }
 
-      return redirect()->route('purchases.show', [
+      return redirect()->route('purchases.index', [
          'purchase' => $id,
       ])->withToastSuccess('Status atualizado com sucesso!');
    }

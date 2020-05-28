@@ -22,6 +22,7 @@ class CreatePurchasesTable extends Migration
          $table->integer('payment_method')->nullable();
          $table->text('obs')->nullable();
          $table->string('provider')->nullable();         //provider = fornecedor
+         $table->date('due_date')->nullable();         //provider = fornecedor
          $table->decimal('total', 10, 2)->default(0);
 
          $table->string('month_year')->default(strval(date('m/yy', strtotime(now()))));

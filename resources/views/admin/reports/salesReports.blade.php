@@ -45,8 +45,8 @@
                            <select name="status" class="select2">
                               <option value="">Todos os status</option>
                               <option value="1">Confirmado</option>
-                              <option value="2">Cancelado</option>
-                              <option value="3">Pendente</option>
+                              <option value="2">Pendente</option>
+                              <option value="3">Cancelado</option>
                            </select>
                         </label>
 

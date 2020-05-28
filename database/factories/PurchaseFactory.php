@@ -12,8 +12,9 @@ $factory->define(Purchase::class, function (Faker $faker) {
       'user_id' => 1,
       'payment_method' => $faker->numberBetween(0, 3),
       'total' => $faker->randomFloat(2, 10, 30),
-      'status' => $faker->numberBetween(1, 3),
+      'status' => $faker->numberBetween(1, 2),
       'provider' => $faker->name,
+      'due_date' => $faker->dateTimeBetween('now', '+3 month'),
       'created_at' => $date,
       'updated_at' => $date,
    ];
