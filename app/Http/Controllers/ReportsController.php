@@ -41,6 +41,7 @@ class ReportsController extends Controller
          'reports' => $reports['data'],
          'order' => $reports['order'],
          'total' => $reports['total'],
+         'discount' => $reports['discount']
       ]);
 
 
@@ -139,6 +140,11 @@ class ReportsController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', $order)
             ->sum('total_price');
+
+         $query['discount'] = Sale::where([['company_id', $company], ['status', $status]])
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', $order)
+            ->sum('discount');
 
          return $query;
       } else if (empty($client) && empty($startDate) && empty($endDate) && !empty($status)) {

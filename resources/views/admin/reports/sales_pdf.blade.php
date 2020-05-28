@@ -28,6 +28,7 @@
             <th>Cliente</th>
             <th>Status</th>
             <th>Data</th>
+            <th>Desconto</th>
             <th>Total</th>
          </tr>
       </thead>
@@ -38,12 +39,26 @@
             <td>{{ $report->client->name }}</td>
             <td>{{ ($report->status == 1 ? 'Confirmado' : ($report->status == 2 ? 'Cancelado' : 'Pendente')) }}</td>
             <td>{{ date_br($report->created_at) }}</td>
+            <td>R$ {{ money_br($report->discount) }}</td>
             <td>R$ {{ money_br($report->total_price) }}</td>
          </tr>
          @endforeach
-         <td colspan="3"></td>
-         <td><b>Total-Geral</b></td>
-         <td>R$ {{ money_br($total) }}</td>
+         <tr>
+            <td colspan="4"></td>
+            <td><b>Total</b></td>
+            <td>R$ {{ money_br($total) }}</td>
+         </tr>
+         <tr>
+            <td colspan="4"></td>
+            <td><b>Desconto</b></td>
+            <td>R$ {{ money_br($discount) }}</td>
+         </tr>
+         <tr>
+            <td colspan="4"></td>
+            <td><b>Total Geral</b></td>
+            <td>R$ {{ money_br($total - $discount) }}</td>
+         </tr>
+
       </tbody>
    </table>
 

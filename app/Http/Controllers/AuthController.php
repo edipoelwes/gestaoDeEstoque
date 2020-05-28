@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\{Purchase, User, Sale};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, DB};
 use App\Http\Controllers\Controller;
-use App\Sale;
 
 class AuthController extends Controller
 {
@@ -14,25 +13,34 @@ class AuthController extends Controller
    {
 
       $sales = Sale::where('company_id', Auth::user()->company_id)->get();
-      $amount = Sale::where('company_id', Auth::user()->company_id)->count();
       $total = Sale::where([
          ['company_id', Auth::user()->company_id],
          ['status', 1],
          ['month_year', date('m/yy', strtotime(now()))],
       ])->sum('total_price');
-      
+
       $discount = Sale::where([
          ['company_id', Auth::user()->company_id],
          ['status', 1],
          ['month_year', date('m/yy', strtotime(now()))],
       ])->sum('discount');
 
+      $pending = Sale::where([
+         ['company_id', Auth::user()->company_id],
+         ['status', 3],
+      ])->sum('total_price');
+
+      $expense = Purchase::where([
+         ['company_id', Auth::user()->company_id],
+         ['status', 3],
+      ])->sum('total');
+
       return view('admin.dashboard', [
          'sales' => $sales,
-         'month' => date('m/yy', strtotime(now())),
-         'amount' => $amount,
          'total' => $total,
          'discount' => $discount,
+         'pending' => $pending,
+         'expense' => $expense,
       ]);
    }
 

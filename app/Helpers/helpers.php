@@ -89,3 +89,43 @@ if (! function_exists('date_br')) {
         return date('d/m/Y', strtotime($date));
     }
 }
+
+if (! function_exists('left_zero')) {
+
+   function left_zero($value, $qty = 11)
+   {
+       return str_pad($value, $qty, 0, STR_PAD_LEFT);
+   }
+}
+
+/**
+ *
+ */
+if (! function_exists('document_db')) {
+
+   function document_db($value = null)
+   {
+       $document = preg_replace("/\D/", '', $value);
+       $lenght = strlen($document) <= 11 ?: 14;
+
+       return $value ? left_zero($document, $lenght) : null;
+   }
+}
+
+/**
+ *
+ */
+if (! function_exists('document_view')) {
+
+   function document_view($value)
+   {
+       $document = preg_replace("/\D/", '', $value);
+
+       if (strlen($document) == 11) {
+           return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $document);
+       }
+
+       return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $document);
+   }
+}
+

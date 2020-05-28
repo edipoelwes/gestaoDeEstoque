@@ -47,7 +47,7 @@
                   <td class="badge badge-pill {{ ($product->amount > $product->min_amount + 3 ? 'badge-success' :
               ($product->amount < $product->min_amount ? 'badge-danger' : 'badge-warning')) }}">{{ $product->amount }}
                   </td>
-                  <td>R$ {{ $product->price }}</td>
+                  <td>R$ {{ money_br($product->price) }}</td>
                   <td class="badge badge-pill badge-primary">{{ $product->min_amount }}</td>
 
                   <td>

@@ -38,7 +38,7 @@
                <tr>
                   <td>{{ $client->id }}</td>
                   <td class="text-orange">{{ $client->name  }}</td>
-                  <td>{{ $client->document }}</td>
+                  <td>{{ document_view($client->document) }}</td>
                   <td class="phone">{{ $client->phone }}</td>
                   <td>
 
