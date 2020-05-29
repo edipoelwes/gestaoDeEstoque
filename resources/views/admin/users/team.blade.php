@@ -15,30 +15,35 @@
             </ul>
          </nav>
 
-         <a href="{{ route('users.create') }}" class="btn btn-orange icon-user-plus ml-1">Criar Usuário</a>
+         <a href="{{ route('users.create') }}" class="btn btn-orange icon-user-plus ml-1">Criar
+            Usuário</a>
       </div>
    </header>
 
    <div class="dash_content_app_box">
       <section class="app_users_home">
-         @foreach ($users as $user)
-         <article class="user radius">
-            <div class="cover" style="background-size: cover; background-image: url({{ $user->url_cover }});">
-            </div>
-            <h4>{{ $user->name }}</h4>
+         @foreach($users as $user)
+            <article class="user radius">
+               <div class="cover">
+                  <img class="dash_sidebar_user_thumb"
+                     src="{{ url(asset('assets/images/avatar.jpg')) }}" alt="" title="" />
+               </div>
+               <h4>{{ $user->name }}</h4>
 
-            <div class="info">
-               <p>{{ $user->email }}</p>
-               <p>Desde {{ date('d/m/Y', strtotime($user->created_at)) }}</p>
-               @if($user->last_login_at)
-               <p>Ultimo login {{ date('d/m/Y', strtotime($user->last_login_at))  }}</p>
-               @endif
-            </div>
+               <div class="info">
+                  <p>{{ $user->email }}</p>
+                  <p>Desde {{ date('d/m/Y', strtotime($user->created_at)) }}</p>
+                  @if($user->last_login_at)
+                     <p>Ultimo login {{ date('d/m/Y', strtotime($user->last_login_at)) }}
+                     </p>
+                  @endif
+               </div>
 
-            <div class="actions">
-               <a class="icon-cog btn btn-orange" href="{{ route('users.edit', ['user'=>$user->id]) }}">Gerenciar</a>
-            </div>
-         </article>
+               <div class="actions">
+                  <a class="icon-cog btn btn-orange"
+                     href="{{ route('users.edit', ['user'=>$user->id]) }}">Gerenciar</a>
+               </div>
+            </article>
          @endforeach
       </section>
    </div>

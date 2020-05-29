@@ -37,7 +37,8 @@
    <div class="dash">
       <aside class="dash_sidebar">
          <article class="dash_sidebar_user">
-            <img class="dash_sidebar_user_thumb" src="{{ url(asset('assets/images/avatar.jpg')) }}" alt="" title="" />
+            <img class="dash_sidebar_user_thumb"
+               src="{{ url(asset('assets/images/avatar.jpg')) }}" alt="" title="" />
 
             <h1 class="dash_sidebar_user_name">
                <a href="">{{ Auth::user()->name }}</a>
@@ -49,80 +50,112 @@
                <a class="icon-tachometer" href="{{ route('home') }}">Dashboard</a>
             </li>
 
-            {{-- @can('Visualizar Permissões') --}}
-            <li class="dash_sidebar_nav_item {{ isActive('permissions') }} {{ isActive('roles') }}">
-               <a class="icon-cogs" href="{{ route('roles.index') }}">Configurações</a>
-               <ul class="dash_sidebar_nav_submenu">
-                  <li class="{{ isActive('roles.index') }}"><a href="{{ route('roles.index') }}">Perfil</a></li>
-                  <li class="{{ isActive('permissions.index') }}"><a href="{{ route('permissions.index') }}">Permissões</a></li>
-               </ul>
-            </li>
-            {{-- @endcan --}}
+
+            @can('Visualizar Configurações')
+               <li
+                  class="dash_sidebar_nav_item {{ isActive('permissions') }} {{ isActive('roles') }}">
+                  <a class="icon-cogs" href="{{ route('roles.index') }}">Configurações</a>
+                  <ul class="dash_sidebar_nav_submenu">
+                     @can('Visualizar Perfil')
+                        <li class="{{ isActive('roles.index') }}"><a
+                              href="{{ route('roles.index') }}">Perfil</a></li>
+                     @endcan
+
+                     @can('Visualizar Permissões')
+                        <li class="{{ isActive('permissions.index') }}"><a
+                              href="{{ route('permissions.index') }}">Permissões</a></li>
+                     @endcan
+                  </ul>
+               </li>
+            @endcan
 
 
-            <li class="dash_sidebar_nav_item {{ isActive('users') }} {{ isActive('companies') }}"><a class="icon-user"
-                  href="{{ route('users.index') }}">Usuarios</a>
-               <ul class="dash_sidebar_nav_submenu">
-                  <li class="{{ isActive('users.index') }}"><a href="{{ route('users.index') }}">
-                        Ver Todos</a></li>
-                  <li class="{{ isActive('companies.index') }}"><a href="{{ route('companies.index') }}">Empresas</a>
-                  </li>
-                  <li class="{{ isActive('users.team') }}"><a href="{{ route('users.team') }}">Time</a></li>
-                  <li class="{{ isActive('users.create') }}"><a href="{{ route('users.create') }}">Criar
-                        Novo</a></li>
-               </ul>
-            </li>
+            @can('Visualizar Usuarios')
+               <li
+                  class="dash_sidebar_nav_item {{ isActive('users') }} {{ isActive('companies') }}">
+                  <a class="icon-user" href="{{ route('users.index') }}">Usuarios</a>
+                  <ul class="dash_sidebar_nav_submenu">
+                     <li class="{{ isActive('users.index') }}"><a
+                           href="{{ route('users.index') }}">
+                           Ver Todos</a></li>
+                     <li class="{{ isActive('companies.index') }}"><a
+                           href="{{ route('companies.index') }}">Empresas</a>
+                     </li>
+                     <li class="{{ isActive('users.team') }}"><a
+                           href="{{ route('users.team') }}">Time</a></li>
+                     <li class="{{ isActive('users.create') }}"><a
+                           href="{{ route('users.create') }}">Criar
+                           Novo</a></li>
+                  </ul>
+               </li>
+            @endcan
 
-            <li class="dash_sidebar_nav_item {{ isActive('clients') }}"><a class="icon-users"
-                  href="{{ route('clients.index') }}">Clientes</a>
-               <ul class="dash_sidebar_nav_submenu">
-                  <li class="{{ isActive('clients.index') }}"><a href="{{ route('clients.index') }}">Ver
-                        Todos</a></li>
-                  <li class="{{ isActive('clients.create') }}"><a href="{{ route('clients.create') }}">Criar
-                        Novo</a></li>
-               </ul>
-            </li>
+            @can('Visualizar Clientes')
+               <li class="dash_sidebar_nav_item {{ isActive('clients') }}"><a class="icon-users"
+                     href="{{ route('clients.index') }}">Clientes</a>
+                  <ul class="dash_sidebar_nav_submenu">
+                     <li class="{{ isActive('clients.index') }}"><a
+                           href="{{ route('clients.index') }}">Ver Todos</a></li>
+                     <li class="{{ isActive('clients.create') }}"><a
+                           href="{{ route('clients.create') }}">Criar Novo</a></li>
+                  </ul>
+               </li>
+            @endcan
 
-            @can('Vizualizar Produtos')
-            <li class="dash_sidebar_nav_item {{ isActive('inventories') }}">
-               <a class="icon-home" href="{{ route('inventories.index') }}">Produtos</a>
-               <ul class="dash_sidebar_nav_submenu">
-                  <li class="{{ isActive('inventories.index') }}"><a href="{{ route('inventories.index') }}">Fraldas</a>
-                  </li>
-                  <li class="{{ isActive('inventories.create') }}"><a href="{{ route('inventories.create') }}">Criar
-                        Novo</a></li>
-               </ul>
-            </li>
+            @can('Visualizar Produtos')
+               <li class="dash_sidebar_nav_item {{ isActive('inventories') }}">
+                  <a class="icon-home" href="{{ route('inventories.index') }}">Produtos</a>
+                  <ul class="dash_sidebar_nav_submenu">
+                     <li class="{{ isActive('inventories.index') }}"><a
+                           href="{{ route('inventories.index') }}">Fraldas</a>
+                     </li>
+                     @can('Cadastrar Produto')
+                        <li class="{{ isActive('inventories.create') }}"><a
+                              href="{{ route('inventories.create') }}">Criar
+                              Novo</a></li>
+                     @endcan
+                  </ul>
+               </li>
             @endcan
 
             <li class="dash_sidebar_nav_item {{ isActive('sales') }}">
                <a class="icon-cart-plus" href="{{ route('sales.index') }}">Vendas</a>
                <ul class="dash_sidebar_nav_submenu">
-                  <li class="{{ isActive('sales.index') }}"><a href="{{ route('sales.index') }}">Vendas</a></li>
-                  <li class="{{ isActive('sales.create') }}"><a href="{{ route('sales.create') }}">Criar Novo</a></li>
+                  <li class="{{ isActive('sales.index') }}"><a
+                        href="{{ route('sales.index') }}">Vendas</a></li>
+                  <li class="{{ isActive('sales.create') }}"><a
+                        href="{{ route('sales.create') }}">Criar Novo</a></li>
                </ul>
             </li>
 
-            @can('Vizualizar Compras')
-            <li class="dash_sidebar_nav_item {{ isActive('purchases') }}">
-               <a class="icon-shopping-cart" href="{{ route('purchases.index') }}">Compras</a>
-               <ul class="dash_sidebar_nav_submenu">
-                  <li class="{{ isActive('purchases.index') }}"><a href="{{ route('purchases.index') }}">Compras</a>
-                  </li>
-                  <li class="{{ isActive('purchases.create') }}"><a href="{{ route('purchases.create') }}">Criar Novo</a></li>
-               </ul>
-            </li>
+            @can('Visualizar Compras')
+               <li class="dash_sidebar_nav_item {{ isActive('purchases') }}">
+                  <a class="icon-shopping-cart" href="{{ route('purchases.index') }}">Compras</a>
+                  <ul class="dash_sidebar_nav_submenu">
+                     <li class="{{ isActive('purchases.index') }}"><a
+                           href="{{ route('purchases.index') }}">Compras</a>
+                     </li>
+                     <li class="{{ isActive('purchases.create') }}"><a
+                           href="{{ route('purchases.create') }}">Criar
+                           Novo</a></li>
+                  </ul>
+               </li>
             @endcan
 
-            <li class="dash_sidebar_nav_item {{ isActive('reports') }}"><a class="icon-file-text"
-                  href="{{ route('reports.index') }}">Relatorios</a>
-               <ul class="dash_sidebar_nav_submenu">
-                  <li class="{{ isActive('reports.index') }}"><a href="{{ route('reports.index') }}">Opções de Relatorios</a></li>
-               </ul>
-            </li>
+            @can('Visualizar Relatorios')
+               <li class="dash_sidebar_nav_item {{ isActive('reports') }}"><a class="icon-file-text"
+                     href="{{ route('reports.index') }}">Relatorios</a>
+                  <ul class="dash_sidebar_nav_submenu">
+                     <li class="{{ isActive('reports.index') }}"><a
+                           href="{{ route('reports.index') }}">Opções de
+                           Relatorios</a></li>
+                  </ul>
+               </li>
+            @endcan
 
             <li class="dash_sidebar_nav_item"><a class="icon-reply" href="">Ver Site</a></li>
-            <li class="dash_sidebar_nav_item"><a class="icon-sign-out on_mobile" href="{{ route('logout') }}">Sair</a>
+            <li class="dash_sidebar_nav_item"><a class="icon-sign-out on_mobile"
+                  href="{{ route('logout') }}">Sair</a>
             </li>
 
 
@@ -137,7 +170,8 @@
                <div class="dash_userbar_box_content">
                   <span class="icon-align-justify icon-notext mobile_menu transition btn btn-green"></span>
                   <h1 class="transition">
-                     <i class="icon-imob text-orange"></i><a href="{{ route('home') }}">Sonhosde<b>Ninar</b></a>
+                     <i class="icon-imob text-orange"></i><a
+                        href="{{ route('home') }}">Sonhosde<b>Ninar</b></a>
                   </h1>
                   <div class="dash_userbar_box_bar no_mobile">
                      <a class="text-red icon-sign-out" href="{{ route('logout') }}">Sair</a>

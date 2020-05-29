@@ -17,6 +17,10 @@ class ClientController extends Controller
     */
    public function index()
    {
+      if(!Auth::user()->hasPermissionTo('Visualizar Clientes')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       return view('admin.clients.index', [
          'clients' => Client::where('company_id', Auth::user()->company_id)->get(),
       ]);
@@ -30,8 +34,7 @@ class ClientController extends Controller
    public function create()
    {
       if(!Auth::user()->hasPermissionTo('Cadastrar Cliente')) {
-         return back()->withToastWarning('Usuario não tem permissão para cadastrar um cliente!');
-         // throw new UnauthorizedException('403', 'You do not have the required authorization!');
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
       return view('admin.clients.form', [
          'companies' => Company::all(['id', 'social_name']),
@@ -47,8 +50,7 @@ class ClientController extends Controller
    public function store(ClientRequest $request)
    {
       if(!Auth::user()->hasPermissionTo('Cadastrar Cliente')) {
-         return back()->withToastWarning('Usuario não tem permissão para cadastrar um cliente!');
-         // throw new UnauthorizedException('403', 'You do not have the required authorization!');
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
 
       $clientCreate = Client::create($request->all());
@@ -79,7 +81,6 @@ class ClientController extends Controller
    {
       if(!Auth::user()->hasPermissionTo('Editar Cliente')) {
          return back()->withToastWarning('Usuario não tem permissão para editar um cliente!');
-         // throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
 
       $client = Client::where('id', $id)->first();
@@ -100,7 +101,6 @@ class ClientController extends Controller
    {
       if(!Auth::user()->hasPermissionTo('Editar Cliente')) {
          return back()->withToastWarning('Usuario não tem permissão para editar um cliente!');
-         // throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
 
       $client = Client::where('id', $id)->first();
@@ -120,8 +120,7 @@ class ClientController extends Controller
    public function destroy($id)
    {
       if(!Auth::user()->hasPermissionTo('Deletar Cliente')) {
-         return back()->withToastWarning('Usuario não tem permissão para deletar um cliente!');
-         // throw new UnauthorizedException('403', 'You do not have the required authorization!');
+         return back()->withToastWarning('Usuario não tem permissão para remover um cliente!');
       }
 
       $product = Client::find($id);

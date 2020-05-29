@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Company as CompanyRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class CompanyController extends Controller
 {
@@ -17,6 +18,10 @@ class CompanyController extends Controller
     */
    public function index()
    {
+      if(!Auth::user()->hasPermissionTo('Visualizar Empresas')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       return view('admin.companies.index', [
          'companies' => Company::where('id', Auth::user()->company_id)->get(),
       ]);
@@ -29,6 +34,10 @@ class CompanyController extends Controller
     */
    public function create(Request $request)
    {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Empresas')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       if (!empty($request->user)) {
          $user = User::where('id', $request->user)->first();
       }
@@ -44,6 +53,10 @@ class CompanyController extends Controller
     */
    public function store(CompanyRequest $request)
    {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Empresas')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       $companyCreate = Company::create($request->all());
 
       return redirect()->route('companies.edit', [
@@ -70,6 +83,10 @@ class CompanyController extends Controller
     */
    public function edit($id)
    {
+      if(!Auth::user()->hasPermissionTo('Editar Empresa')) {
+         return back()->withToastWarning('Usuario não tem permissão para editar uma Empresa!');
+      }
+
       $company = Company::where('id', $id)->first();
 
       return view('admin.companies.edit', [
@@ -86,6 +103,10 @@ class CompanyController extends Controller
     */
    public function update(CompanyRequest $request, $id)
    {
+      if(!Auth::user()->hasPermissionTo('Editar Empresa')) {
+         return back()->withToastWarning('Usuario não tem permissão para editar uma Empresa!');
+      }
+
       $company = Company::where('id', $id)->first();
 
       $company->fill($request->all());
@@ -104,6 +125,13 @@ class CompanyController extends Controller
     */
    public function destroy($id)
    {
-      //
+      if(!Auth::user()->hasPermissionTo('Deletar Empresa')) {
+         return back()->withToastWarning('Usuario não tem permissão para remover uma Empresa!');
+      }
+
+      $company = Company::find($id);
+      $company->delete();
+
+      return back()->withToastSuccess('Cliente excluído com sucesso!');
    }
 }

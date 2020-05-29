@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Inventory as InventoryRequest;
 use App\{Inventory, InventoryHistory, SaleProduct};
 use Illuminate\Support\Facades\{Auth, DB};
+use Spatie\Permission\Exceptions\UnauthorizedException;
+
 
 class InventoryController extends Controller
 {
@@ -16,6 +18,9 @@ class InventoryController extends Controller
     */
    public function index()
    {
+      if (!Auth::user()->hasPermissionTo('Visualizar Produtos')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
 
       return view('admin.products.index', [
          'products' => Inventory::where('company_id', Auth::user()->company_id)->get(),
@@ -29,6 +34,10 @@ class InventoryController extends Controller
     */
    public function create()
    {
+      if (!Auth::user()->hasPermissionTo('Cadastrar Produto')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       return view('admin.products.form');
    }
 
@@ -40,6 +49,10 @@ class InventoryController extends Controller
     */
    public function store(InventoryRequest $request)
    {
+      if (!Auth::user()->hasPermissionTo('Cadastrar Produto')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       $user = Auth::user();
 
       $product = $request->all();
@@ -77,6 +90,9 @@ class InventoryController extends Controller
     */
    public function edit($id)
    {
+      if (!Auth::user()->hasPermissionTo('Editar Produto')) {
+         return back()->withToastWarning('Usuario não tem permissão para editar um Produto!');
+      }
       $product = Inventory::where('id', $id)->first();
       return view('admin.products.form', [
          'product' => $product,
@@ -92,6 +108,9 @@ class InventoryController extends Controller
     */
    public function update(Request $request, $id)
    {
+      if (!Auth::user()->hasPermissionTo('Editar Produto')) {
+         return back()->withToastWarning('Usuario não tem permissão para editar um Produto!');
+      }
       $productUpdate = Inventory::where('id', $id)->first();
 
       if ($productUpdate->update($request->all())) {
@@ -115,9 +134,13 @@ class InventoryController extends Controller
     */
    public function destroy($id)
    {
+      if (!Auth::user()->hasPermissionTo('Deletar Produto')) {
+         return back()->withToastWarning('Usuario não tem permissão para deletar um Produto!');
+      }
+
       $product = Inventory::find($id);
 
-      if(SaleProduct::where('inventory_id', $id)->count() > 0){
+      if (SaleProduct::where('inventory_id', $id)->count() > 0) {
          return back()->withToastWarning('Produto não pode ser excluído!');
       }
       $product->delete();
@@ -138,5 +161,4 @@ class InventoryController extends Controller
 
       InventoryHistory::create($data);
    }
-
 }

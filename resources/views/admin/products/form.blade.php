@@ -19,8 +19,6 @@
       </div>
    </header>
 
-   {{-- @include('admin.properties.filter') --}}
-
    <div class="dash_content_app_box">
 
       <div class="nav">

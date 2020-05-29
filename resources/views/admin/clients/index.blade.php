@@ -15,11 +15,8 @@
          </nav>
 
          <a href="{{ route('clients.create') }}" class="btn btn-orange icon-user ml-1">Criar Cliente</a>
-         <button class="btn btn-green icon-search icon-notext ml-1 search_open"></button>
       </div>
    </header>
-
-   {{-- @include('admin.users.filter') --}}
 
    <div class="dash_content_app_box">
       <div class="dash_content_app_box_stage">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\{Client, Inventory, Sale, SaleProduct, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, DB};
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class SaleController extends Controller
 {
@@ -15,6 +16,10 @@ class SaleController extends Controller
     */
    public function index()
    {
+      if(!Auth::user()->hasPermissionTo('Visualizar Vendas')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       return view('admin.sales.index', [
          'sales' => Sale::where('company_id', Auth::user()->company_id)->get(),
       ]);
@@ -27,6 +32,10 @@ class SaleController extends Controller
     */
    public function create()
    {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Venda')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       return view('admin.sales.form', [
          'clients' => Client::all(['id', 'name', 'document']),
       ]);
@@ -40,6 +49,10 @@ class SaleController extends Controller
     */
    public function store(Request $request)
    {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Venda')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       $user = Auth::user();
       $sales = $request->all();
 
@@ -109,6 +122,10 @@ class SaleController extends Controller
     */
    public function edit($id)
    {
+      if(!Auth::user()->hasPermissionTo('Editar Venda')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       $sale = Sale::where('id', $id)->first();
 
       return view('admin.sales.form', [

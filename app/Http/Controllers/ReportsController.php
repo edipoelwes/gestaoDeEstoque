@@ -6,11 +6,16 @@ use App\{Client, Sale};
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class ReportsController extends Controller
 {
    public function index()
    {
+      if(!Auth::user()->hasPermissionTo('Visualizar Relatorios')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       return view('admin.reports.reports');
    }
 

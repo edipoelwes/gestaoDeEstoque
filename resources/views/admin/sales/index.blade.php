@@ -14,16 +14,13 @@
             <ul>
                <li><a href="{{ route('home') }}">Dashboard</a></li>
                <li class="separator icon-angle-right icon-notext"></li>
-               <li><a href="{{ route('users.index') }}" class="text-orange">Clientes</a></li>
+               <li><a href="{{ route('inventories.index') }}" class="text-orange">Produto</a></li>
             </ul>
          </nav>
 
-         <a href="{{ route('sales.create') }}" class="btn btn-orange icon-user ml-1">Criar Pedido</a>
-         <button class="btn btn-green icon-search icon-notext ml-1 search_open"></button>
+         <a href="{{ route('sales.create') }}" class="btn btn-orange icon-user ml-1">Cadastrar Venda</a>
       </div>
    </header>
-
-   {{-- @include('admin.users.filter') --}}
 
    <div class="dash_content_app_box">
       <div class="dash_content_app_box_stage">

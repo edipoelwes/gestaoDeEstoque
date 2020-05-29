@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\{Auth, Storage};
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class UserController extends Controller
 {
@@ -18,6 +19,10 @@ class UserController extends Controller
     */
    public function index()
    {
+      if(!Auth::user()->hasPermissionTo('Visualizar Usuarios')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       $users = User::where('company_id', Auth::User()->company_id)->get();
       return view('admin.users.index', [
          'users' => $users,
@@ -26,6 +31,9 @@ class UserController extends Controller
 
    public function team()
    {
+      if(!Auth::user()->hasPermissionTo('Visualizar Time')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
       $users = User::where([['company_id', Auth::User()->company_id], ['admin', 1]])->get();
       return view('admin.users.team', [
          'users' => $users,
@@ -39,6 +47,9 @@ class UserController extends Controller
     */
    public function create()
    {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Usuario')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
 
       return view('admin.users.create', [
          'companies' => Company::all(['id', 'social_name']),
@@ -53,6 +64,9 @@ class UserController extends Controller
     */
    public function store(UserRequest $request)
    {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Usuario')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
 
       $userCreate = User::create($request->all());
 
@@ -85,6 +99,10 @@ class UserController extends Controller
     */
    public function edit($id)
    {
+      if(!Auth::user()->hasPermissionTo('Editar Usuario')) {
+         return back()->withToastWarning('Usuario não tem permissão para editar um usuario!');
+      }
+
       $user = User::where('id', $id)->first();
 
       return view('admin.users.edit', [
@@ -102,6 +120,10 @@ class UserController extends Controller
     */
    public function update(UserRequest $request, $id)
    {
+      if(!Auth::user()->hasPermissionTo('Editar Usuario')) {
+         return back()->withToastWarning('Usuario não tem permissão para editar um usuario!');
+      }
+
       $user = User::where('id', $id)->first();
 
       if (!empty($request->file('cover'))) {
@@ -132,6 +154,10 @@ class UserController extends Controller
     */
    public function destroy($id)
    {
+      if(!Auth::user()->hasPermissionTo('Deletar Usuario')) {
+         return back()->withToastWarning('Usuario não tem permissão para remover um usuario!');
+      }
+
       $userDelete = User::where('id', $id)->first();
       $userDelete->delete();
 

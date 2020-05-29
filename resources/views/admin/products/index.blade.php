@@ -1,7 +1,7 @@
 @extends('admin.master.master')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('assets/css/badge.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/css/badge.css') }}">
 @endpush
 
 @section('content')
@@ -18,8 +18,10 @@
                <li><a href="{{ route('inventories.index') }}" class="text-orange">Produtos</a></li>
             </ul>
          </nav>
-
-         <a href="{{ route('inventories.create') }}" class="btn btn-orange icon-user ml-1">Cadastrar Produto</a>
+         @can('Cadastrar Produto')
+            <a href="{{ route('inventories.create') }}"
+               class="btn btn-orange icon-user ml-1">Cadastrar Produto</a>
+         @endcan
 
       </div>
    </header>
@@ -38,41 +40,35 @@
                </tr>
             </thead>
             <tbody>
-               @foreach ($products as $product)
-               <tr>
-                  <td>{{ $product->id }}</td>
-                  <td><a href="{{ route('inventories.edit', ['inventory' => $product->id]) }}" class="text-orange">
-                        {{ $product->name }}</a>
-                  </td>
-                  <td class="badge badge-pill {{ ($product->amount > $product->min_amount + 3 ? 'badge-success' :
-              ($product->amount < $product->min_amount ? 'badge-danger' : 'badge-warning')) }}">{{ $product->amount }}
-                  </td>
-                  <td>R$ {{ money_br($product->price) }}</td>
-                  <td class="badge badge-pill badge-primary">{{ $product->min_amount }}</td>
+               @foreach($products as $product)
+                  <tr>
+                     <td>{{ $product->id }}</td>
+                     <td><a href="{{ route('inventories.edit', ['inventory' => $product->id]) }}"
+                           class="text-orange">
+                           {{ $product->name }}</a>
+                     </td>
+                     <td class="badge badge-pill {{ ($product->amount > $product->min_amount + 3 ? 'badge-success' :
+                     ($product->amount < $product->min_amount ? 'badge-danger' : 'badge-warning')) }}">
+                        {{ $product->amount }}
+                     </td>
+                     <td>R$ {{ money_br($product->price) }}</td>
+                     <td class="badge badge-pill badge-primary">{{ $product->min_amount }}</td>
+                     <td>
+                        <a href="{{ route('inventories.edit', ['inventory' => $product->id]) }}"
+                           class="text-blue icon-pencil-square-o" title="Editar Usuário">
+                        </a>
+                        <a href="javascript:;" class="text-orange icon-trash"
+                           onclick="confirmDelete({{ $product->id }})" title="Excluir Usuário">
+                        </a>
+                        <form id="btn-delete-{{ $product->id }}"
+                           action="{{ route('inventories.destroy', ['inventory' => $product->id]) }}"
+                           method="post" class="hidden">
+                           @method('DELETE')
+                           @csrf
+                        </form>
+                     </td>
 
-                  <td>
-
-                     @can('Editar Produto')
-                     <a href="{{ route('inventories.edit', ['inventory' => $product->id]) }}" class="text-blue icon-pencil-square-o"
-                     title="Editar Usuário">
-                     </a>
-                     @endcan
-
-                     @can('Deletar Produto')
-                     <a href="javascript:;" class="text-orange icon-trash" onclick="confirmDelete({{ $product->id }})"
-                        title="Excluir Usuário">
-                     </a>
-                     @endcan
-
-                     <form id="btn-delete-{{ $product->id }}"
-                        action="{{ route('inventories.destroy', ['inventory' => $product->id]) }}" method="post"
-                        class="hidden">
-                        @method('DELETE')
-                        @csrf
-                     </form>
-                  </td>
-
-               </tr>
+                  </tr>
                @endforeach
             </tbody>
          </table>
@@ -82,5 +78,5 @@
 @endsection
 
 @push('js')
-<script src="{{ asset('assets/js/functions.js') }}" defer></script>
+   <script src="{{ asset('assets/js/functions.js') }}" defer></script>
 @endpush

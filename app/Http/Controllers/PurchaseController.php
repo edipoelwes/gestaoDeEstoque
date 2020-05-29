@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\{Inventory, PaymentMethod, Purchase, PurchaseProduct, Status};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, DB};
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class PurchaseController extends Controller
 {
@@ -15,6 +16,10 @@ class PurchaseController extends Controller
     */
    public function index()
    {
+      if(!Auth::user()->hasPermissionTo('Visualizar Compras')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       return view('admin.purchases.index', [
          'purchases' => Purchase::where('company_id', Auth::user()->company_id)->get(),
       ]);
@@ -27,6 +32,10 @@ class PurchaseController extends Controller
     */
    public function create()
    {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Compra')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       return view('admin.purchases.form', [
          'status' => Status::all(),
          'payments' => PaymentMethod::all(),
@@ -41,6 +50,10 @@ class PurchaseController extends Controller
     */
    public function store(Request $request)
    {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Compra')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
       $data = $request->all();
       $company = Auth::user()->company_id;
       $purchase['company_id'] = $company;
