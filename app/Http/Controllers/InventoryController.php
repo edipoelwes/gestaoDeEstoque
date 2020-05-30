@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Inventory as InventoryRequest;
-use App\{Inventory, InventoryHistory, SaleProduct};
+use App\{Category, Inventory, InventoryHistory, SaleProduct};
 use Illuminate\Support\Facades\{Auth, DB};
 use Spatie\Permission\Exceptions\UnauthorizedException;
 
@@ -23,7 +23,9 @@ class InventoryController extends Controller
       }
 
       return view('admin.products.index', [
-         'products' => Inventory::where('company_id', Auth::user()->company_id)->get(),
+         'products' => Inventory::where([
+            ['company_id', Auth::user()->company_id],
+            ['category_id', 1]])->get(),
       ]);
    }
 
@@ -38,7 +40,11 @@ class InventoryController extends Controller
          throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
 
-      return view('admin.products.form');
+      $categories = Category::where('company_id', Auth::user()->company_id)->get();
+
+      return view('admin.products.form', [
+         'categories' => $categories,
+      ]);
    }
 
    /**
@@ -57,7 +63,6 @@ class InventoryController extends Controller
 
       $product = $request->all();
       $product['company_id'] = $user->company_id;
-
 
       if ($createProduct = Inventory::create($product)) {
 
@@ -93,9 +98,13 @@ class InventoryController extends Controller
       if (!Auth::user()->hasPermissionTo('Editar Produto')) {
          return back()->withToastWarning('Usuario não tem permissão para editar um Produto!');
       }
+
       $product = Inventory::where('id', $id)->first();
+      $categories = Category::where('company_id', Auth::user()->company_id)->get();
+
       return view('admin.products.form', [
          'product' => $product,
+         'categories' => $categories,
       ]);
    }
 

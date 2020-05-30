@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
       'companies' => 'CompanyController',
       'inventories' => 'InventoryController',
       'purchases' => 'PurchaseController',
+      'categories' => 'CategoryController',
    ]);
 
    /** Relatorios */

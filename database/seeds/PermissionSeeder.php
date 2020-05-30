@@ -71,6 +71,12 @@ class PermissionSeeder extends Seeder
          /** Home */
          ['name' => 'Visualizar itens', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
 
+         /**Categorias */
+         ['name' => 'Cadastrar Categoria', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+         ['name' => 'Editar Categoria', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+         ['name' => 'Visualizar Categorias', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+         ['name' => 'Deletar Categoria', 'guard_name' => 'web', 'created_at' => now(), 'updated_at' => now()],
+
       ]);
    }
 }

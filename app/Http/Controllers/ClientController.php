@@ -36,6 +36,7 @@ class ClientController extends Controller
       if(!Auth::user()->hasPermissionTo('Cadastrar Cliente')) {
          throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
+      
       return view('admin.clients.form', [
          'companies' => Company::all(['id', 'social_name']),
       ]);

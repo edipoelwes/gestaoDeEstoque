@@ -54,6 +54,17 @@
 
                      <div class="label_g2">
                         <label class="label">
+                           <span class="legend">Categoria:</span>
+                           <select name="category_id" class="select2">
+                              <option value="">Selecione uma Categoria</option>
+                              @foreach ($categories as $category)
+                              <option value="{{ $category->id }}" {{ $category->id == old('category_id', $product->category_id) ? 'selected' : '' }}>
+                                 {{ $category->name }}</option>
+                              @endforeach
+                           </select>
+                        </label>
+
+                        <label class="label">
                            <span class="legend">Preço:</span>
                            <input type="text" name="price" class="mask-money"
                               value="{{ old('price', $product->price ?? null) }}" />

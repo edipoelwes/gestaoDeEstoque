@@ -102,6 +102,19 @@
                </li>
             @endcan
 
+            @can('Visualizar Categorias')
+               <li class="dash_sidebar_nav_item {{ isActive('categories') }}"><a class="icon-users"
+                     href="{{ route('categories.index') }}">categorias</a>
+                  <ul class="dash_sidebar_nav_submenu">
+                     <li class="{{ isActive('categories.index') }}"><a
+                           href="{{ route('categories.index') }}">Ver Todos</a></li>
+                     <li class="{{ isActive('categories.create') }}"><a
+                           href="{{ route('categories.create') }}">Criar
+                           Novo</a></li>
+                  </ul>
+               </li>
+            @endcan
+
             @can('Visualizar Produtos')
                <li class="dash_sidebar_nav_item {{ isActive('inventories') }}">
                   <a class="icon-home" href="{{ route('inventories.index') }}">Produtos</a>
