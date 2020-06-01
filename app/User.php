@@ -24,13 +24,7 @@ class User extends Authenticatable
       'email',
       'password',
 
-      'genre',
       'document',
-      'document_secondary',
-      'document_secondary_complement',
-      'date_of_bird',
-      'place_of_bird',
-      'civil_status',
       'cover',
 
       'zipcode',
@@ -66,9 +60,9 @@ class User extends Authenticatable
       'email_verified_at' => 'datetime',
    ];
 
-   public function companies()
+   public function company()
    {
-      return $this->hasMany(Company::class, 'user', 'id');
+      return $this->belongsTo(Company::class);
    }
 
    public function getUrlCoverAttribute()

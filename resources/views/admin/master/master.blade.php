@@ -52,10 +52,18 @@
 
 
             @can('Visualizar Configurações')
-               <li
-                  class="dash_sidebar_nav_item {{ isActive('permissions') }} {{ isActive('roles') }}">
-                  <a class="icon-cogs" href="{{ route('roles.index') }}">Configurações</a>
+               <li class="dash_sidebar_nav_item {{ isActive('permissions') }} {{ isActive('roles') }}
+                  {{ isActive('root') }} {{ isActive('companies') }} {{ isActive('categories') }}">
+
+                  <a class="icon-cogs" href="#">Configurações</a>
                   <ul class="dash_sidebar_nav_submenu">
+                     <li class="{{ isActive('companies.index') }}"><a
+                           href="{{ route('companies.index') }}">Empresas</a>
+                     </li>
+                     <li class="{{ isActive('root.users.index') }}"><a
+                           href="{{ route('root.users.index') }}">Usuarios</a></li>
+                     <li class="{{ isActive('root.users.index') }}"><a
+                           href="{{ route('categories.index') }}">Categorias</a></li>
                      @can('Visualizar Perfil')
                         <li class="{{ isActive('roles.index') }}"><a
                               href="{{ route('roles.index') }}">Perfil</a></li>
@@ -71,15 +79,14 @@
 
 
             @can('Visualizar Usuarios')
-               <li
-                  class="dash_sidebar_nav_item {{ isActive('users') }} {{ isActive('companies') }}">
+               <li class="dash_sidebar_nav_item {{ isActive('users') }}">
                   <a class="icon-user" href="{{ route('users.index') }}">Usuarios</a>
                   <ul class="dash_sidebar_nav_submenu">
                      <li class="{{ isActive('users.index') }}"><a
                            href="{{ route('users.index') }}">
                            Ver Todos</a></li>
-                     <li class="{{ isActive('companies.index') }}"><a
-                           href="{{ route('companies.index') }}">Empresas</a>
+                     <li class="{{ isActive('users.company') }}"><a
+                           href="{{ route('users.company') }}">Empresas</a>
                      </li>
                      <li class="{{ isActive('users.team') }}"><a
                            href="{{ route('users.team') }}">Time</a></li>
@@ -98,19 +105,6 @@
                            href="{{ route('clients.index') }}">Ver Todos</a></li>
                      <li class="{{ isActive('clients.create') }}"><a
                            href="{{ route('clients.create') }}">Criar Novo</a></li>
-                  </ul>
-               </li>
-            @endcan
-
-            @can('Visualizar Categorias')
-               <li class="dash_sidebar_nav_item {{ isActive('categories') }}"><a class="icon-users"
-                     href="{{ route('categories.index') }}">categorias</a>
-                  <ul class="dash_sidebar_nav_submenu">
-                     <li class="{{ isActive('categories.index') }}"><a
-                           href="{{ route('categories.index') }}">Ver Todos</a></li>
-                     <li class="{{ isActive('categories.create') }}"><a
-                           href="{{ route('categories.create') }}">Criar
-                           Novo</a></li>
                   </ul>
                </li>
             @endcan

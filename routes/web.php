@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Root\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
    Route::get('icons', 'AuthController@icon')->name('icons');
 
    Route::get('users/team', 'UserController@team')->name('users.team');
+   Route::get('users/company', 'UserController@company')->name('users.company');
    Route::get('search-products', 'SaleController@search_products')->name('sales.search-products');
    Route::put('details-status-sale/{sale}', 'SaleController@changeStatus')->name('sales.details-status');
    Route::put('details-status-purchase/{purchase}', 'PurchaseController@changeStatus')->name('purchases.details-status');
@@ -49,6 +51,12 @@ Route::middleware('auth')->group(function () {
       'purchases' => 'PurchaseController',
       'categories' => 'CategoryController',
    ]);
+
+   Route::prefix('root')->name('root.')->namespace('Root')->group(function() {
+      Route::resources([
+         'users' => 'UserController',
+      ]);
+   });
 
    /** Relatorios */
    Route::get('reports', 'ReportsController@index')->name('reports.index');

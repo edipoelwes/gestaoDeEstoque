@@ -19,14 +19,6 @@
       </div>
    </header>
 
-   {{-- @if($errors->all())
-    @foreach($errors->all() as $error)
-      @message(['color' => 'orange'])
-        <p class="icon-asterisk">{{ $error }}</p>
-   @endmessage
-   @endforeach
-   @endif --}}
-
    <div class="dash_content_app_box">
       <div class="dash_content_app_box_stage">
          <form class="app_form" action="{{ route('companies.store') }}" method="post">

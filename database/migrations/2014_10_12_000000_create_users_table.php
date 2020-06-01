@@ -23,13 +23,13 @@ class CreateUsersTable extends Migration
 
 
          /** data */
-         $table->string('genre')->nullable();
+         // $table->string('genre')->nullable();
          $table->string('document')->unique();
-         $table->string('document_secondary', 20)->nullable();
-         $table->string('document_secondary_complement')->nullable();
-         $table->date('date_of_birth')->nullable();
-         $table->string('place_of_birth')->nullable();
-         $table->string('civil_status')->nullable();
+         // $table->string('document_secondary', 20)->nullable();
+         // $table->string('document_secondary_complement')->nullable();
+         // $table->date('date_of_birth')->nullable();
+         // $table->string('place_of_birth')->nullable();
+         // $table->string('civil_status')->nullable();
          $table->string('cover')->nullable();
 
          /** address */

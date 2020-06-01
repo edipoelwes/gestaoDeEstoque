@@ -29,17 +29,6 @@ class UserController extends Controller
       ]);
    }
 
-   public function team()
-   {
-      if(!Auth::user()->hasPermissionTo('Visualizar Time')) {
-         throw new UnauthorizedException('403', 'You do not have the required authorization!');
-      }
-      $users = User::where([['company_id', Auth::User()->company_id], ['admin', 1]])->get();
-      return view('admin.users.team', [
-         'users' => $users,
-      ]);
-   }
-
    /**
     * Show the form for creating a new resource.
     *
@@ -51,7 +40,7 @@ class UserController extends Controller
          throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
 
-      return view('admin.users.create', [
+      return view('admin.users.form', [
          'companies' => Company::all(['id', 'social_name']),
       ]);
    }
@@ -68,12 +57,14 @@ class UserController extends Controller
          throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
 
-      $userCreate = User::create($request->all());
+      $user = $request->all();
+      $user['company_id'] = Auth::user()->company_id;
+      $userCreate = User::create($user);
 
-      if (!empty($request->file('cover'))) {
-         $userCreate->cover = $request->file('cover')->store('user');
-         $userCreate->save();
-      }
+      // if (!empty($request->file('cover'))) {
+      //    $userCreate->cover = $request->file('cover')->store('user');
+      //    $userCreate->save();
+      // }
 
       return redirect()->route('users.edit', [
          'user' => $userCreate->id,
@@ -86,7 +77,7 @@ class UserController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-   public function show($id)
+   public function show(User $user)
    {
       //
    }
@@ -97,15 +88,13 @@ class UserController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-   public function edit($id)
+   public function edit(User $user)
    {
       if(!Auth::user()->hasPermissionTo('Editar Usuario')) {
          return back()->withToastWarning('Usuario não tem permissão para editar um usuario!');
       }
 
-      $user = User::where('id', $id)->first();
-
-      return view('admin.users.edit', [
+      return view('admin.users.form', [
          'user' => $user,
          'companies' => Company::all(['id', 'social_name']),
       ]);
@@ -118,28 +107,28 @@ class UserController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-   public function update(UserRequest $request, $id)
+   public function update(UserRequest $request, User $user)
    {
       if(!Auth::user()->hasPermissionTo('Editar Usuario')) {
          return back()->withToastWarning('Usuario não tem permissão para editar um usuario!');
       }
 
-      $user = User::where('id', $id)->first();
+      $user->update($request->all());
 
-      if (!empty($request->file('cover'))) {
-         Storage::delete($user->cover);
-         $user->cover = '';
-      }
+      // if (!empty($request->file('cover'))) {
+      //    Storage::delete($user->cover);
+      //    $user->cover = '';
+      // }
 
-      $user->fill($request->all());
+      // $user->fill($request->all());
 
-      if (!empty($request->file('cover'))) {
-         $user->cover = $request->file('cover')->store('user');
-      }
+      // if (!empty($request->file('cover'))) {
+      //    $user->cover = $request->file('cover')->store('user');
+      // }
 
-      if (!$user->save()) {
-         return redirect()->back()->withInput()->withErros();
-      }
+      // if (!$user->save()) {
+      //    return redirect()->back()->withInput()->withErros();
+      // }
 
       return redirect()->route('users.edit', [
          'user' => $user->id,
@@ -152,16 +141,36 @@ class UserController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-   public function destroy($id)
+   public function destroy(User $user)
    {
       if(!Auth::user()->hasPermissionTo('Deletar Usuario')) {
          return back()->withToastWarning('Usuario não tem permissão para remover um usuario!');
       }
 
-      $userDelete = User::where('id', $id)->first();
-      $userDelete->delete();
+      $user->delete();
+      return back()->withToastSuccess('Usuario removido com sucesso!');
+   }
 
-      return back()->withToastSuccess('Usuario excluído com sucesso!');
+   public function company()
+   {
+      if(!Auth::user()->hasPermissionTo('Visualizar Empresas')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
+      return view('admin.users.company', [
+         'company' => Company::where('id', Auth::user()->company_id)->first(),
+      ]);
+   }
+
+   public function team()
+   {
+      if(!Auth::user()->hasPermissionTo('Visualizar Time')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+      $users = User::where([['company_id', Auth::User()->company_id], ['admin', 1]])->get();
+      return view('admin.users.team', [
+         'users' => $users,
+      ]);
    }
 
    public function roles ($user)

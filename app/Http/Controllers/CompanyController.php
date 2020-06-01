@@ -23,7 +23,7 @@ class CompanyController extends Controller
       }
 
       return view('admin.companies.index', [
-         'companies' => Company::where('id', Auth::user()->company_id)->get(),
+         'companies' => Company::all(),
       ]);
    }
 
@@ -34,7 +34,7 @@ class CompanyController extends Controller
     */
    public function create(Request $request)
    {
-      if(!Auth::user()->hasPermissionTo('Cadastrar Empresas')) {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Empresa')) {
          throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
 
@@ -53,7 +53,7 @@ class CompanyController extends Controller
     */
    public function store(CompanyRequest $request)
    {
-      if(!Auth::user()->hasPermissionTo('Cadastrar Empresas')) {
+      if(!Auth::user()->hasPermissionTo('Cadastrar Empresa')) {
          throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
 
