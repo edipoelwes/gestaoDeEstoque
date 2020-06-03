@@ -32,8 +32,7 @@
             </thead>
             <tbody>
                <tr>
-                  <td><a href="{{ route('companies.edit', ['company' => $company->id]) }}"
-                        class="text-orange">{{ $company->social_name }}</a></td>
+                  <td class="text-orange">{{ $company->social_name }}</a></td>
                   <td>{{ $company->alias_name }}</td>
                   <td>{{ $company->document_company }}</td>
                   <td>{{ $company->document_company_secondary }}</td>

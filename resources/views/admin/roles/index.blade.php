@@ -32,32 +32,32 @@
                </tr>
             </thead>
             <tbody>
-               @foreach ($roles as $role)
-               <tr>
-                  <td>{{ $role->id }}</td>
-                  <td class="text-orange">{{ $role->name }}</td>
-                  <td>
-                     <a href="{{ route('roles.edit', ['role' => $role->id]) }}" class="text-blue icon-pencil-square-o"
-                     title="Editar Perfil">
-                     </a>
+               @foreach($roles as $role)
+                  <tr>
+                     <td>{{ $role->id }}</td>
+                     <td class="text-orange">{{ $role->name }}</td>
+                     <td>
+                        <a href="{{ route('roles.edit', ['role' => $role->id]) }}"
+                           class="text-blue icon-pencil-square-o" title="Editar Perfil">
+                        </a>
 
-                     <a href="{{ route('roles.permission', ['role' => $role->id]) }}" class="text-green icon-key"
-                        title="Permissões">
-                     </a>
+                        <a href="{{ route('roles.permission', ['role' => $role->id]) }}"
+                           class="text-green icon-key" title="Permissões">
+                        </a>
 
-                     <a href="javascript:;" class="text-orange icon-trash" onclick="confirmDelete({{ $role->id }})"
-                        title="Excluir Perfil">
-                     </a>
+                        <a href="javascript:;" class="text-orange icon-trash" onclick="confirmDelete({{ $role->id }})"
+                           title="Excluir Perfil">
+                        </a>
 
-                     <form id="btn-delete-{{ $role->id }}"
-                        action="{{ route('roles.destroy', ['role' => $role->id]) }}" method="post"
-                        class="hidden">
-                        @method('DELETE')
-                        @csrf
-                     </form>
-                  </td>
+                        <form id="btn-delete-{{ $role->id }}"
+                           action="{{ route('roles.destroy', ['role' => $role->id]) }}"
+                           method="post" class="hidden">
+                           @method('DELETE')
+                           @csrf
+                        </form>
+                     </td>
 
-               </tr>
+                  </tr>
                @endforeach
             </tbody>
          </table>

@@ -52,17 +52,18 @@
 
 
             @can('Visualizar Configurações')
-               <li class="dash_sidebar_nav_item {{ isActive('permissions') }} {{ isActive('roles') }}
+               <li
+                  class="dash_sidebar_nav_item {{ isActive('permissions') }} {{ isActive('roles') }}
                   {{ isActive('root') }} {{ isActive('companies') }} {{ isActive('categories') }}">
 
-                  <a class="icon-cogs" href="#">Configurações</a>
+                  <a class="icon-cogs" href="javascript:;">Configurações</a>
                   <ul class="dash_sidebar_nav_submenu">
-                     <li class="{{ isActive('companies.index') }}"><a
-                           href="{{ route('companies.index') }}">Empresas</a>
+                     <li class="{{ isActive('root.companies.index') }}"><a
+                           href="{{ route('root.companies.index') }}">Empresas</a>
                      </li>
                      <li class="{{ isActive('root.users.index') }}"><a
                            href="{{ route('root.users.index') }}">Usuarios</a></li>
-                     <li class="{{ isActive('root.users.index') }}"><a
+                     <li class="{{ isActive('categories.index') }}"><a
                            href="{{ route('categories.index') }}">Categorias</a></li>
                      @can('Visualizar Perfil')
                         <li class="{{ isActive('roles.index') }}"><a
@@ -90,9 +91,6 @@
                      </li>
                      <li class="{{ isActive('users.team') }}"><a
                            href="{{ route('users.team') }}">Time</a></li>
-                     <li class="{{ isActive('users.create') }}"><a
-                           href="{{ route('users.create') }}">Criar
-                           Novo</a></li>
                   </ul>
                </li>
             @endcan
@@ -136,15 +134,15 @@
             </li>
 
             @can('Visualizar Compras')
-               <li class="dash_sidebar_nav_item {{ isActive('purchases') }}">
-                  <a class="icon-shopping-cart" href="{{ route('purchases.index') }}">Compras</a>
+               <li class="dash_sidebar_nav_item {{ isActive('purchases') }} {{ isActive('expenses') }}">
+                  <a class="icon-shopping-cart" href="javascript:;">Despesas</a>
                   <ul class="dash_sidebar_nav_submenu">
                      <li class="{{ isActive('purchases.index') }}"><a
                            href="{{ route('purchases.index') }}">Compras</a>
                      </li>
-                     <li class="{{ isActive('purchases.create') }}"><a
-                           href="{{ route('purchases.create') }}">Criar
-                           Novo</a></li>
+                     <li class="{{ isActive('expenses.index') }}"><a
+                           href="{{ route('expenses.index') }}">Outras Saidas</a>
+                     </li>
                   </ul>
                </li>
             @endcan

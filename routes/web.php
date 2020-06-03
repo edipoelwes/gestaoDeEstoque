@@ -41,20 +41,22 @@ Route::middleware('auth')->group(function () {
    Route::get('search-products', 'SaleController@search_products')->name('sales.search-products');
    Route::put('details-status-sale/{sale}', 'SaleController@changeStatus')->name('sales.details-status');
    Route::put('details-status-purchase/{purchase}', 'PurchaseController@changeStatus')->name('purchases.details-status');
+   Route::put('details-status-expense/{expense}', 'ExpenseController@changeStatus')->name('expenses.details-status');
    //Route::get('details/{sale}', 'SaleController@details')->name('sales.details');
    Route::resources([
       'sales' => 'SaleController',
       'users' => 'UserController',
       'clients' => 'ClientController',
-      'companies' => 'CompanyController',
       'inventories' => 'InventoryController',
       'purchases' => 'PurchaseController',
       'categories' => 'CategoryController',
+      'expenses' => 'ExpenseController',
    ]);
 
    Route::prefix('root')->name('root.')->namespace('Root')->group(function() {
       Route::resources([
          'users' => 'UserController',
+         'companies' => 'CompanyController',
       ]);
    });
 

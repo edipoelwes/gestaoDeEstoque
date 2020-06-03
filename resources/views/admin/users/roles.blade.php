@@ -28,16 +28,26 @@
          </ul>
 
 
-         <form action="{{ route('users.rolesSync', ['user' => $user->id]) }}" method="post" class="app_form" enctype="multipart/form-data">
+         <form
+            action="{{ route('users.rolesSync', ['user' => $user->id]) }}"
+            method="post" class="app_form" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="nav_tabs_content">
-               @foreach ($roles as $role)
-               <div>
-                  <label class="label">
-                     <input type="checkbox" id="{{ $role->id }}" name="{{ $role->id }}" {{ ($role->can == 1 ? 'checked' : '') }}><span>{{ $role->name }}</span>
-                 </label>
-               </div>
+               @foreach($roles as $role)
+                  <div>
+                     <label class="label">
+                        @can('Super Usuario')
+                           <input type="checkbox" id="{{ $role->id }}" name="{{ $role->id }}"
+                              {{ ($role->can == 1 ? 'checked' : '') }}><span>{{ $role->name }}</span>
+                        @else
+                           @if($role->name != 'Desenvolvedor')
+                              <input type="checkbox" id="{{ $role->id }}" name="{{ $role->id }}"
+                                 {{ ($role->can == 1 ? 'checked' : '') }}><span>{{ $role->name }}</span>
+                           @endif
+                        @endcan
+                     </label>
+                  </div>
                @endforeach
 
             </div>

@@ -13,17 +13,14 @@
                <li class="separator icon-angle-right icon-notext"></li>
                <li><a href="{{ route('users.index') }}">Clientes</a></li>
                <li class="separator icon-angle-right icon-notext"></li>
-               <li><a href="{{ route('companies.index') }}" class="text-orange">Empresas</a></li>
+               <li><a href="{{ route('root.companies.index') }}" class="text-orange">Empresas</a></li>
             </ul>
          </nav>
 
-         <a href="{{ route('companies.create') }}" class="btn btn-orange icon-building-o ml-1">Criar
+         <a href="{{ route('root.companies.create') }}" class="btn btn-orange icon-building-o ml-1">Criar
             Empresa</a>
-         <button class="btn btn-green icon-search icon-notext ml-1 search_open"></button>
       </div>
    </header>
-
-   @include('admin.companies.filter')
 
    <div class="dash_content_app_box">
       <div class="dash_content_app_box_stage">
@@ -34,19 +31,17 @@
                   <th>Nome Fantasia</th>
                   <th>CNPJ</th>
                   <th>IE</th>
-                  {{-- <th>Responsável</th> --}}
+
                </tr>
             </thead>
             <tbody>
                @foreach ($companies as $company)
                <tr>
-                  <td><a href="{{ route('companies.edit', ['company' => $company->id]) }}"
+                  <td><a href="{{ route('root.companies.edit', ['company' => $company->id]) }}"
                         class="text-orange">{{ $company->social_name }}</a></td>
                   <td>{{ $company->alias_name }}</td>
                   <td>{{ $company->document_company }}</td>
                   <td>{{ $company->document_company_secondary }}</td>
-                  {{-- <td><a href="{{ route('users.edit', ['user' => $company->user()->first()->id]) }}"
-                  class="text-orange">{{ $company->user()->first()->name }}</a></td> --}}
                </tr>
                @endforeach
             </tbody>

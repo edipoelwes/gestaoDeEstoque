@@ -19,8 +19,7 @@
             </ul>
          </nav>
 
-         <a href="{{ route('purchases.create') }}" class="btn btn-orange icon-user ml-1">Comprar</a>
-         <button class="btn btn-green icon-search icon-notext ml-1 search_open"></button>
+         <a href="{{ route('purchases.create') }}" class="btn btn-orange icon-user ml-1">Registrar Compra</a>
       </div>
    </header>
 
