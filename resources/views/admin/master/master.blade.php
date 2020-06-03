@@ -197,6 +197,12 @@
    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}" defer></script>
    <script src="{{ asset('assets/js/functions.js') }}" defer></script>
 
+   <script type="text/javascript">
+      var BASE_URL = {!! json_encode(url('/')) !!};
+
+      console.log(BASE_URL);
+   </script>
+
    @stack('js')
 </body>
 

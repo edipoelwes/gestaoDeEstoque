@@ -153,10 +153,10 @@
 
 @push('js')
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
    var BASE_URL = {!! json_encode(url('/')) !!};
 
-</script>
+</script> --}}
 
 <script src="{{ asset('assets/js/purchase.js') }}"></script>
 
