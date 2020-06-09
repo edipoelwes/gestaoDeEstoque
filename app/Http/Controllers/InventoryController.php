@@ -22,7 +22,7 @@ class InventoryController extends Controller
          throw new UnauthorizedException('403', 'You do not have the required authorization!');
       }
 
-      return view('admin.products.index', [
+      return view('admin.products.diapers.index', [
          'products' => Inventory::where([
             ['company_id', Auth::user()->company_id],
             ['category_id', 1]])->get(),
@@ -156,6 +156,86 @@ class InventoryController extends Controller
 
       return back()->withToastSuccess('Produto excluído com sucesso!');
    }
+
+
+   public function clothes()
+   {
+      if (!Auth::user()->hasPermissionTo('Visualizar Produtos')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
+      return view('admin.products.clothes.index', [
+         'products' => Inventory::where([
+            ['company_id', Auth::user()->company_id],
+            ['category_id', 3]])->get(),
+      ]);
+   }
+
+   public function changingDiapers()
+   {
+      if (!Auth::user()->hasPermissionTo('Visualizar Produtos')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
+      return view('admin.products.changingDiapers.index', [
+         'products' => Inventory::where([
+            ['company_id', Auth::user()->company_id],
+            ['category_id', 2]])->get(),
+      ]);
+   }
+
+   public function footwear()
+   {
+      if (!Auth::user()->hasPermissionTo('Visualizar Produtos')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
+      return view('admin.products.footwear.index', [
+         'products' => Inventory::where([
+            ['company_id', Auth::user()->company_id],
+            ['category_id', 4]])->get(),
+      ]);
+   }
+
+   public function babyLayette()
+   {
+      if (!Auth::user()->hasPermissionTo('Visualizar Produtos')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
+      return view('admin.products.babyLayette.index', [
+         'products' => Inventory::where([
+            ['company_id', Auth::user()->company_id],
+            ['category_id', 6]])->get(),
+      ]);
+   }
+
+   public function hygiene()
+   {
+      if (!Auth::user()->hasPermissionTo('Visualizar Produtos')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
+      return view('admin.products.hygiene.index', [
+         'products' => Inventory::where([
+            ['company_id', Auth::user()->company_id],
+            ['category_id', 5]])->get(),
+      ]);
+   }
+
+   public function accessories()
+   {
+      if (!Auth::user()->hasPermissionTo('Visualizar Produtos')) {
+         throw new UnauthorizedException('403', 'You do not have the required authorization!');
+      }
+
+      return view('admin.products.accessories.index', [
+         'products' => Inventory::where([
+            ['company_id', Auth::user()->company_id],
+            ['category_id', 7]])->get(),
+      ]);
+   }
+
 
 
    private function inventary_history($user, $product, $action)

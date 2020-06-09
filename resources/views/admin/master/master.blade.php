@@ -113,13 +113,26 @@
                   <a class="icon-home" href="{{ route('inventories.index') }}">Produtos</a>
                   <ul class="dash_sidebar_nav_submenu">
                      <li class="{{ isActive('inventories.index') }}"><a
-                           href="{{ route('inventories.index') }}">Fraldas</a>
+                           href="{{ route('inventories.index') }}">Fraldas Descartáveis</a>
                      </li>
-                     @can('Cadastrar Produto')
-                        <li class="{{ isActive('inventories.create') }}"><a
-                              href="{{ route('inventories.create') }}">Criar
-                              Novo</a></li>
-                     @endcan
+                     <li class="{{ isActive('inventories.changing-diapers') }}"><a
+                           href="{{ route('inventories.changing-diapers') }}">Troca de Fraldas</a>
+                     </li>
+                     <li class="{{ isActive('inventories.clothes') }}"><a
+                           href="{{ route('inventories.clothes') }}">Roupas</a>
+                     </li>
+                     <li class="{{ isActive('inventories.footwear') }}"><a
+                           href="{{ route('inventories.footwear') }}">Calçados</a>
+                     </li>
+                     <li class="{{ isActive('inventories.baby-layette') }}"><a
+                           href="{{ route('inventories.baby-layette') }}">Enxoval</a>
+                     </li>
+                     <li class="{{ isActive('inventories.hygiene') }}"><a
+                           href="{{ route('inventories.hygiene') }}">Higiene e Limpeza</a>
+                     </li>
+                     <li class="{{ isActive('inventories.accessories') }}"><a
+                           href="{{ route('inventories.accessories') }}">Acessórios</a>
+                     </li>
                   </ul>
                </li>
             @endcan
@@ -135,7 +148,8 @@
             </li>
 
             @can('Visualizar Compras')
-               <li class="dash_sidebar_nav_item {{ isActive('purchases') }} {{ isActive('expenses') }}">
+               <li
+                  class="dash_sidebar_nav_item {{ isActive('purchases') }} {{ isActive('expenses') }}">
                   <a class="icon-shopping-cart" href="javascript:;">Despesas</a>
                   <ul class="dash_sidebar_nav_submenu">
                      <li class="{{ isActive('purchases.index') }}"><a
@@ -153,8 +167,9 @@
                      href="{{ route('reports.index') }}">Relatorios</a>
                   <ul class="dash_sidebar_nav_submenu">
                      <li class="{{ isActive('reports.index') }}"><a
-                           href="{{ route('reports.index') }}">Opções de
-                           Relatorios</a></li>
+                           href="{{ route('reports.index') }}">
+                           Opções de Relatorios</a>
+                     </li>
                   </ul>
                </li>
             @endcan
@@ -201,9 +216,12 @@
    <script src="{{ asset('assets/js/functions.js') }}" defer></script>
 
    <script type="text/javascript">
-      var BASE_URL = {!! json_encode(url('/')) !!};
+      var BASE_URL = {
+         !!json_encode(url('/')) !!
+      };
 
       console.log(BASE_URL);
+
    </script>
 
    @stack('js')

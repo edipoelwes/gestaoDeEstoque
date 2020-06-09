@@ -43,6 +43,13 @@ Route::middleware('auth')->group(function () {
    Route::put('details-status-purchase/{purchase}', 'PurchaseController@changeStatus')->name('purchases.details-status');
    Route::put('details-status-expense/{expense}', 'ExpenseController@changeStatus')->name('expenses.details-status');
    //Route::get('details/{sale}', 'SaleController@details')->name('sales.details');
+
+   Route::get('inventories/clothes', 'InventoryController@clothes')->name('inventories.clothes');
+   Route::get('inventories/changing-diapers', 'InventoryController@changingDiapers')->name('inventories.changing-diapers');
+   Route::get('inventories/footwear', 'InventoryController@footwear')->name('inventories.footwear');
+   Route::get('inventories/baby-layette', 'InventoryController@babyLayette')->name('inventories.baby-layette');
+   Route::get('inventories/hygiene', 'InventoryController@hygiene')->name('inventories.hygiene');
+   Route::get('inventories/accessories', 'InventoryController@accessories')->name('inventories.accessories');
    Route::resources([
       'sales' => 'SaleController',
       'users' => 'UserController',
