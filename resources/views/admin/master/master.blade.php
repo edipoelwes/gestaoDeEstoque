@@ -74,6 +74,7 @@
                         <li class="{{ isActive('permissions.index') }}"><a
                               href="{{ route('permissions.index') }}">Permissões</a></li>
                      @endcan
+                     <li><a href="{{ route('icons') }}">Icons</a></li>
                   </ul>
                </li>
             @endcan
@@ -158,6 +159,8 @@
                </li>
             @endcan
 
+
+
             <li class="dash_sidebar_nav_item"><a class="icon-reply" href="">Ver Site</a></li>
             <li class="dash_sidebar_nav_item"><a class="icon-sign-out on_mobile"
                   href="{{ route('logout') }}">Sair</a>
@@ -175,7 +178,7 @@
                <div class="dash_userbar_box_content">
                   <span class="icon-align-justify icon-notext mobile_menu transition btn btn-green"></span>
                   <h1 class="transition">
-                     <i class="icon-imob text-orange"></i><a
+                     <i class="icon-smile-o text-orange"></i><a
                         href="{{ route('home') }}">Sonhosde<b>Ninar</b></a>
                   </h1>
                   <div class="dash_userbar_box_bar no_mobile">

@@ -22,7 +22,7 @@ class CreateExpensesTable extends Migration
          $table->integer('status')->nullable();
          $table->date('due_date')->nullable();
          $table->decimal('value', 10, 2)->default(0);
-         $table->string('month_year')->default(strval(date('m/yy', strtotime(now()))));
+         //$table->string('month_year')->default(strval(date('m/yy', strtotime(now()))));
          $table->timestamps();
          $table->softDeletes();
 

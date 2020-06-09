@@ -25,7 +25,7 @@ class CreatePurchasesTable extends Migration
          $table->date('due_date')->nullable();         //provider = fornecedor
          $table->decimal('total', 10, 2)->default(0);
 
-         $table->string('month_year')->default(strval(date('m/yy', strtotime(now()))));
+         // $table->string('month_year')->default(strval(date('m/yy', strtotime(now()))));
          $table->timestamps();
          $table->softDeletes();
 

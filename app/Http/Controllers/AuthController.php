@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Purchase, User, Sale};
+use App\{Expense, Purchase, User, Sale};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, DB};
 use App\Http\Controllers\Controller;
@@ -12,39 +12,51 @@ class AuthController extends Controller
    public function home()
    {
 
+      $month = date('m', strtotime(now()));
+
       $sales = Sale::where([['company_id', Auth::user()->company_id], ['status', '!=', 3]])
-      ->orderBy('created_at', 'desc')
-      ->limit(5)
-      ->get();
+         ->orderBy('created_at', 'desc')
+         ->limit(5)
+         ->get();
 
       $total = Sale::where([
          ['company_id', Auth::user()->company_id],
          ['status', 1],
-         ['month_year', date('m/yy', strtotime(now()))],
-      ])->sum('total_price');
+      ])->whereMonth('created_at', $month)->sum('total_price');
 
       $discount = Sale::where([
          ['company_id', Auth::user()->company_id],
          ['status', 1],
-         ['month_year', date('m/yy', strtotime(now()))],
-      ])->sum('discount');
+      ])->whereMonth('created_at', $month)->sum('discount');
 
       $pending = Sale::where([
          ['company_id', Auth::user()->company_id],
          ['status', 2],
       ])->sum('total_price');
 
+      $discount_pending = Sale::where([
+         ['company_id', Auth::user()->company_id],
+         ['status', 2],
+      ])->sum('discount');
+
       $expense = Purchase::where([
          ['company_id', Auth::user()->company_id],
          ['status', 2],
-      ])->sum('total');
+      ])->whereMonth('due_date', $month)->sum('total');
+
+      $expense_pending = Expense::where([
+         ['company_id', Auth::user()->company_id],
+         ['status', 2]
+      ])->whereMonth('due_date', $month)->sum('value');
 
       return view('admin.dashboard', [
          'sales' => $sales,
          'total' => $total,
          'discount' => $discount,
+         'discount_pending' => $discount_pending,
          'pending' => $pending,
          'expense' => $expense,
+         'expense_pending' => $expense_pending,
       ]);
    }
 
@@ -102,6 +114,6 @@ class AuthController extends Controller
 
    public function icon()
    {
-      return view('admin.icons');
+      return view('root.icons');
    }
 }

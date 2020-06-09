@@ -11,7 +11,7 @@
          <div class="dash_content_app_box">
             <section class="app_dash_home_stats">
                <article class="control radius">
-                  <h4 class="text-center icon-users">Vendas Mensal</h4>
+                  <h4 class="text-center icon-usd">Vendas Mensal</h4>
                   <h1 class="text-center" style="margin-top: 40px">
                      <p class="text-orange">R$ <span class="text-blue">{{ money_br($total - $discount) }}</span>
                      </p>
@@ -20,19 +20,19 @@
                </article>
 
                <article class="users radius">
-                  <h4 class="text-center icon-users">Vendas Pendentes</h4>
+                  <h4 class="text-center icon-usd">Vendas Pendentes</h4>
                   <h1 class="text-center" style="margin-top: 40px">
-                     <p class="text-orange">R$ <span class="text-blue">{{ money_br($pending) }}</span></p>
+                     <p class="text-orange">R$ <span class="text-blue">{{ money_br($pending - $discount_pending) }}</span></p>
                   </h1>
                </article>
 
                <article class="blog radius">
-                  <h4 class="text-center icon-cart-plus">Despesas</h4>
+                  <h4 class="text-center icon-usd">Despesas</h4>
                   <h1 class="text-center" style="margin-top: 40px">
-                     <p class="text-orange">R$ <span class="text-blue">{{ money_br($expense) }}</span></p>
+                     <p class="text-orange">R$ <span class="text-blue">{{ money_br($expense + $expense_pending) }}</span></p>
                   </h1>
                </article>
-               
+
             </section>
          </div>
       </section>
